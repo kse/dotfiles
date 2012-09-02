@@ -1,0 +1,21 @@
+[user]
+	name = Kasper Eenberg
+	email = kse@mahavira.dk
+
+[color]
+	status = auto
+	branch = auto
+	interactive = auto
+	diff = auto
+
+[apply]
+	whitespace = warn
+
+[alias]
+	co = checkout
+	cp = cherry-pick
+	st = status
+	ci = commit
+
+[include]
+	path = .github

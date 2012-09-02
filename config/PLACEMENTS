@@ -1,3 +1,4 @@
 radiotray_bookmarks.xml	~/.local/share/radiotray/bookmarks.xml
 vimrc	~/.vimrc
 vimrc	/etc/vimrc
+gitconfig ~/.gitconfig
