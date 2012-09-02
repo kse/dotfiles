@@ -1,0 +1,8 @@
+keycode 43 = h H h H Left Hstroke hstroke    
+!keycode 43 = h H h H hstroke Hstroke hstroke
+keycode 44 = j J j J Down dead_horn dead_hook
+!keycode 44 = j J j J dead_hook dead_horn dead_hook
+keycode 45 = k K k K Up ampersand kra 
+!keycode 45 = k K k K kra ampersand kra
+keycode 46 = l L l L Right Lstroke lstroke
+!keycode 46 = l L l L lstroke Lstroke lstroke

@@ -1,0 +1,99 @@
+!General
+URxvt.depth:                32
+!URxvt.background:       rgba:1111/1111/1111/dddd
+!URxvt.foreground:       White
+
+URxvt.perl-ext-common:      default,clipboard,url-select,keyboard-select,matcher,vtwheel
+URxvt.url-select.launcher:  chromium
+URxvt.url-select.underline: true
+URxvt.keysym.M-u:           perl:url-select:select_next
+URxvt.keysym.M-Escape:      perl:keyboard-select:activate
+URxvt.keysym.M-s:           perl:keyboard-select:search
+
+URxvt.urlLauncher:          /usr/bin/chromium
+URxvt.matcher.button:       1
+URxvt.scrollBar:            false
+URxvt.fade:                 20
+URxvt*loginShell:           true
+
+URxvt*font:                 xft:Inconsolata:style=Medium:pixelsize=13:antialias=true:hinting=true
+! URxvt*font:                 xft:Droid Sans Mono:style=Regular:pixelsize=11:antialias=true:hinting=true
+! URxvt*boldFont:             xft:Nimbus Mono L:style=Bold:pixelsize=13:antialias=true:hinting=true
+
+URxvt*saveLines:            12000
+
+URxvt*foreground:           #f2f2f2
+URxvt*background:           #101010
+
+Xft.dpi:       105
+Xft.antialias: true
+Xft.rgba:      vrbg
+Xft.hinting:   true
+Xft.hintstyle: hintslight
+
+! Normal
+! color0    black
+! color1    red
+! color2    green
+! color3    yellow
+! color4    blue
+! color5    purple
+! color6    cyan
+! color7    white
+
+! urxvt*color0:    #6c6c6c
+! urxvt*color1:    #e9897c
+! urxvt*color2:    #b6e77d
+! urxvt*color3:    #ecebbe
+! urxvt*color4:    #a9cdeb
+! urxvt*color5:    #ea96eb
+! urxvt*color6:    #c9caec
+! urxvt*color7:    #f2f2f2
+
+! Light
+! color8    black
+! color9    red
+! color10    green
+! color11    yellow
+! color12    blue
+! color13    purple
+! color14    cyan
+! color15    white
+
+! urxvt*color8:    #747474
+! urxvt*color9:    #f99286
+! urxvt*color10:    #c3f786
+! urxvt*color11:    #fcfbcc
+! urxvt*color12:    #b6defb
+! urxvt*color13:    #fba1fb
+! urxvt*color14:    #d7d9fc
+! urxvt*color15:    #e2e2e2
+
+urxvt*internalborder: 6.
+
+URxvt*colorUL: #86a2b0
+
+! black
+URxvt*color0  : #2E3436
+URxvt*color8  : #555753
+! red
+URxvt*color1  : #CC0000
+URxvt*color9  : #EF2929
+! green
+URxvt*color2  : #4E9A06
+URxvt*color10 : #8AE234
+! yellow
+URxvt*color3  : #C4A000
+URxvt*color11 : #FCE94F
+! blue
+URxvt*color4  : #3465A4
+URxvt*color12 : #729FCF
+! magenta
+URxvt*color5  : #75507B
+URxvt*color13 : #AD7FA8
+! cyan
+URxvt*color6  : #06989A
+URxvt*color14 : #34E2E2
+! white
+URxvt*color7  : #D3D7CF
+URxvt*color15 : #EEEEEC
