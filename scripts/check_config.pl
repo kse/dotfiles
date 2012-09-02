@@ -21,12 +21,13 @@ open(my $pl_fh, '<', "$cfg_folder/PLACEMENTS") or die "Unable to open placement 
 
 while(my $line = <$pl_fh>) {
 	my ($cfg, $place) = split(/\t+/, $line);
-	chomp($place);
 
 	if(!$cfg || !$place) {
 		print "Invalid placement line: '$line'\n";
 		next;
 	}
+
+	chomp($place);
 
 	# Remove beginning/trailing whitespace.
 	$cfg =~ s/^\s+//;
