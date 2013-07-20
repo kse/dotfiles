@@ -66,8 +66,7 @@ if(-e $lockfile) {
 	}
 }
 
-#TODO Uncomment
-#Proc::Daemon->init();
+Proc::Daemon->init();
 
 # Write the lockfile.
 open(my $LFH, '>', $lockfile) or die $!;
