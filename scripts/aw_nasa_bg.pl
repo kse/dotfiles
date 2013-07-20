@@ -66,7 +66,8 @@ if(-e $lockfile) {
 	}
 }
 
-Proc::Daemon->init();
+#TODO Uncomment
+#Proc::Daemon->init();
 
 # Write the lockfile.
 open(my $LFH, '>', $lockfile) or die $!;
@@ -97,9 +98,10 @@ while(1) {
 		next;
 	}
 
-	my $link = $ref->{channel}->{item}->{enclosure}->{url};
-	my $title = $ref->{channel}->{item}->{title};
-	my $description = $ref->{channel}->{item}->{description};
+	print Dumper $ref;
+	my $link = $ref->{channel}->{item}[0]->{enclosure}->{url};
+	my $title = $ref->{channel}->{item}[0]->{title};
+	my $description = $ref->{channel}->{item}[0]->{description};
 
 	if(!$link || !$title || !$description) {
 		if(-t STDOUT) {
