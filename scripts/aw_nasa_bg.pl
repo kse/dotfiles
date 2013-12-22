@@ -15,7 +15,7 @@ use Encode;
 # Call this from crontab, and it should just work. But only for one
 # user on a machine at a time (it uses global filename).
 
-my $feed_path = "http://www.nasa.gov/rss/lg_image_of_the_day.rss";
+my $feed_path = "http://www.nasa.gov/rss/dyn/lg_image_of_the_day.rss";
 
 my $tmp_image = '/tmp/awesome_iotd_bckground.tmp';
 my $image     = '/tmp/awesome_iotd_bckground.jpg';
@@ -66,7 +66,7 @@ if(-e $lockfile) {
 	}
 }
 
-Proc::Daemon->init();
+#Proc::Daemon->init();
 
 # Write the lockfile.
 open(my $LFH, '>', $lockfile) or die $!;
