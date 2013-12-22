@@ -16,6 +16,9 @@
 	cp = cherry-pick
 	st = status
 	ci = commit
+	b  = branch
 
 [include]
 	path = .github
+[push]
+	default = matching

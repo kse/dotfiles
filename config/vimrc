@@ -9,6 +9,12 @@
 " properly set to work with the Vim-related packages.
 runtime! archlinux.vim
 
+filetype off
+call pathogen#infect()
+call pathogen#helptags()
+call pathogen#incubate()
+map <silent> <C-n> :NERDTreeToggle<CR>
+
 " If you prefer the old-style vim functionalty, add 'runtime! vimrc_example.vim'
 " Or better yet, read /usr/share/vim/vim72/vimrc_example.vim or the vim manual
 " and configure vim to your own liking!
@@ -87,14 +93,15 @@ set title
 
 "Remap tab to move between windows
 "map <Space> <c-W>w
-map <Tab> <c-W>w
-map <S-Tab> <c-W>W
+map <silent> <Tab> :tabnext<CR>
+map <silent> <S-Tab> :tabprev<CR>
 
+let g:C_Ctrl_j = 'off'
 "Map C - hjkl to move between windows
-noremap <C-h> <C-w>h
-noremap <C-j> <C-w>j
-noremap <C-k> <C-w>k
-noremap <C-l> <C-w>l
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
 
 " Use the damn hjkl keys
 map <up> <nop>
@@ -123,3 +130,77 @@ let Tlist_WinWidth = 30
 map <F4> :TlistToggle<cr>
 
 map <C-g>a ggVG
+
+set grepprg=grep\ -nH\ $*
+let g:tex_flavor = "latex"
+
+set cc=80
+
+syn match ErrorLeadSpace /^ \+/      " highlight any leading spaces
+syn match ErrorTailSpace / \+$/      " highlight any trailing spaces
+syn match Error80        /\%>80v.\+/ " highlight anything past 80
+
+hi Error80 ctermbg=red
+hi ErrorLeadSpace ctermbg=red
+hi ErrorTailSpace ctermbg=red
+
+if ! has("gui_running") 
+	    set t_Co=256 
+	endif 
+" feel free to choose :set background=light for a different style 
+
+"filetype off                                                                  
+"filetype plugin indent off                                                    
+"set runtimepath+=$GOROOT/misc/vim                                             
+"filetype plugin indent on                                                     
+"syntax on                                                                     
+"
+
+colors peaksea 
+hi ColorColumn ctermbg=lightblue guibg=lightblue
+
+"if has("autocmd")
+"	autocmd InsertEnter * :set number
+"	autocmd InsertLeave * :set relativenumber
+"endif
+
+function! NumberToggle()
+	let [&nu, &rnu] = [!&rnu, &nu+&rnu==1]
+
+	"if(&relativenumber == 1 && &number == 1)
+	"	set norelativenumber
+	"elseif(&relativenumber == 0 && &number == 1)
+	"	set nonumber
+	"else
+	"	set relativenumber
+	"	set number
+	"endif
+endfunc
+
+nnoremap <silent> <C-m> :call NumberToggle()<cr>
+set relativenumber
+set number
+
+let mapleader=" "
+nnoremap <Leader>q :q<CR>
+nnoremap <Leader>Q :qall<CR>
+
+nnoremap <Leader>h <C-w>h<CR>
+nnoremap <Leader>j <C-w>jh<CR>
+nnoremap <Leader>k <C-w>kh<CR>
+nnoremap <Leader>l <C-w>lh<CR>
+nnoremap <Leader>H <C-w>Hh<CR>
+nnoremap <Leader>J <C-w>Jh<CR>
+nnoremap <Leader>K <C-w>Kh<CR>
+nnoremap <Leader>L <C-w>Lh<CR>
+
+nnoremap <Leader>< 2<C-w><
+nnoremap <Leader>> 2<C-w>>
+nnoremap <Leader>, 2<C-w>-
+nnoremap <Leader>. 2<C-w>+
+
+let g:airline_powerline_fonts = 1
+set laststatus=2
+set noshowmode
+let g:airline#extensions#tabline#enabled = 1
+set ttimeoutlen=40
