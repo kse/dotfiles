@@ -146,7 +146,7 @@ hi ErrorTailSpace ctermbg=red
 
 if ! has("gui_running") 
 	    set t_Co=256 
-	endif 
+endif 
 " feel free to choose :set background=light for a different style 
 
 "filetype off                                                                  
@@ -157,7 +157,8 @@ if ! has("gui_running")
 "
 
 colors peaksea 
-hi ColorColumn ctermbg=lightblue guibg=lightblue
+hi ColorColumn ctermbg=black guibg=gray28
+"hi ColorColumn ctermbg=lightblue guibg=lightblue
 
 "if has("autocmd")
 "	autocmd InsertEnter * :set number
