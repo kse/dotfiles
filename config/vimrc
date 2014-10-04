@@ -9,6 +9,8 @@
 " properly set to work with the Vim-related packages.
 runtime! archlinux.vim
 
+let g:CoqIDEDefaultKeyMap = 1
+
 filetype off
 call pathogen#infect()
 call pathogen#helptags()
@@ -104,14 +106,14 @@ nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 
 " Use the damn hjkl keys
-map <up> <nop>
-map <down> <nop>
-map <left> <nop>
-map <right> <nop>
-imap <up> <nop>
-imap <down> <nop>
-imap <left> <nop>
-imap <right> <nop>
+"map <up> <nop>
+"map <down> <nop>
+"map <left> <nop>
+"map <right> <nop>
+"imap <up> <nop>
+"imap <down> <nop>
+"imap <left> <nop>
+"imap <right> <nop>
 
 "map <S-PageDown> tabn<cr>
 "map <S-PageUp> tabp<cr>
@@ -204,4 +206,11 @@ let g:airline_powerline_fonts = 1
 set laststatus=2
 set noshowmode
 let g:airline#extensions#tabline#enabled = 1
-set ttimeoutlen=40
+set ttimeoutlen=20
+
+if filereadable(".vim.custom")
+	so .vim.custom
+endif
+
+let g:gitgutter_enabled = 1
+highlight clear SignColumn
