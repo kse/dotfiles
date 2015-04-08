@@ -38,7 +38,8 @@ end
 
 -- {{{ Variable definitions
 -- Themes define colours, icons, and wallpapers
-beautiful.init("/home/kse/.config/awesome/theme.lua")
+-- beautiful.init("/home/kse/.config/awesome/theme.lua")
+beautiful.init("/usr/share/awesome/themes/dunzor/theme.lua")
 -- beautiful.init("/usr/share/awesome/themes/default/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
@@ -81,9 +82,10 @@ end
 do
   local cmds = 
   { 
-    "batti",
+    "cbatticon",
 	"nm-applet",
-	"volumeicon"
+	"dropbox"
+	--"volumeicon"
   }
 
   for _,i in pairs(cmds) do
@@ -91,14 +93,20 @@ do
   end
 end
 
+-- Let caps-lock be another escape button.
 os.execute("setxkbmap -layout dk -option 'caps:escape'")
 
 -- }}}
+--
+--
+
+local APW = require("apw/widget")
 
 -- {{{ Wallpaper
 if beautiful.wallpaper then
     for s = 1, screen.count() do
-        gears.wallpaper.maximized(beautiful.wallpaper, s, true)
+        --gears.wallpaper.maximized(beautiful.wallpaper, s, true)
+        gears.wallpaper.fit(beautiful.wallpaper, s)
     end
 end
 -- }}}
@@ -213,6 +221,7 @@ for s = 1, screen.count() do
 
     -- Widgets that are aligned to the right
     local right_layout = wibox.layout.fixed.horizontal()
+	right_layout:add(APW)
     if s == 1 then right_layout:add(wibox.widget.systray()) end
     right_layout:add(mytextclock)
     right_layout:add(mylayoutbox[s])
@@ -326,6 +335,11 @@ globalkeys = awful.util.table.join(
 )
 
 clientkeys = awful.util.table.join(
+	-- APW hotkeys
+	awful.key({ }, "XF86AudioRaiseVolume",  APW.Up),
+	awful.key({ }, "XF86AudioLowerVolume",  APW.Down),
+	awful.key({ }, "XF86AudioMute",         APW.ToggleMute),
+
 	awful.key({ }, "XF86KbdBrightnessDown", function () awful.util.spawn("asus-kbd-backlight down") end),
 	awful.key({ }, "XF86KbdBrightnessUp",   function () awful.util.spawn("asus-kbd-backlight up") end),
 	awful.key({ }, "XF86ScreenBrightnessUp",   function () awful.util.spawn("asus-screen-brightness up") end),
