@@ -1,7 +1,5 @@
 !General
 URxvt.depth:                32
-!URxvt.background:       rgba:1111/1111/1111/dddd
-!URxvt.foreground:       White
 
 URxvt.perl-ext-common:      default,clipboard,url-select,keyboard-select,matcher,vtwheel
 URxvt.url-select.launcher:  chromium
@@ -15,11 +13,6 @@ URxvt.matcher.button:       1
 URxvt.scrollBar:            false
 URxvt.fade:                 20
 URxvt*loginShell:           true
-
-URxvt*font:                 xft:Inconsolata:style=Medium:pixelsize=13:antialias=true:hinting=true
-! URxvt*font:                 xft:Droid Sans Mono:style=Regular:pixelsize=11:antialias=true:hinting=true
-! URxvt*boldFont:             xft:Nimbus Mono L:style=Bold:pixelsize=13:antialias=true:hinting=true
-
 URxvt*saveLines:            12000
 
 URxvt*foreground:           #f2f2f2
@@ -31,46 +24,10 @@ Xft.rgba:      vrbg
 Xft.hinting:   true
 Xft.hintstyle: hintslight
 
-! Normal
-! color0    black
-! color1    red
-! color2    green
-! color3    yellow
-! color4    blue
-! color5    purple
-! color6    cyan
-! color7    white
-
-! urxvt*color0:    #6c6c6c
-! urxvt*color1:    #e9897c
-! urxvt*color2:    #b6e77d
-! urxvt*color3:    #ecebbe
-! urxvt*color4:    #a9cdeb
-! urxvt*color5:    #ea96eb
-! urxvt*color6:    #c9caec
-! urxvt*color7:    #f2f2f2
-
-! Light
-! color8    black
-! color9    red
-! color10    green
-! color11    yellow
-! color12    blue
-! color13    purple
-! color14    cyan
-! color15    white
-
-! urxvt*color8:    #747474
-! urxvt*color9:    #f99286
-! urxvt*color10:    #c3f786
-! urxvt*color11:    #fcfbcc
-! urxvt*color12:    #b6defb
-! urxvt*color13:    #fba1fb
-! urxvt*color14:    #d7d9fc
-! urxvt*color15:    #e2e2e2
+URxvt*font:                 xft:DejaVu Sans Mono:style=Book:pixelsize=13:antialias=true:hinting=true
+URxvt*boldFont:             xft:DejaVu Sans Mono:style=Bold:pixelsize=13:antialias=true:hinting=true
 
 urxvt*internalborder: 6.
-
 URxvt*colorUL: #86a2b0
 
 ! black
@@ -97,3 +54,11 @@ URxvt*color14 : #34E2E2
 ! white
 URxvt*color7  : #D3D7CF
 URxvt*color15 : #EEEEEC
+
+URxvt.lineSpace:            0
+ 
+! Fix font space
+URxvt*letterSpace: -1
+ 
+! Pointer
+URxvt.pointerBlank:         true
