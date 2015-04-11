@@ -64,7 +64,7 @@ layouts =
     -- awful.layout.suit.tile.top,
     awful.layout.suit.fair,
     awful.layout.suit.floating,
-    awful.layout.suit.fair.horizontal,
+    -- awful.layout.suit.fair.horizontal,
     -- awful.layout.suit.spiral,
     -- awful.layout.suit.spiral.dwindle,
     -- awful.layout.suit.max,
@@ -85,7 +85,6 @@ do
     "cbatticon",
 	"nm-applet",
 	"dropbox"
-	--"volumeicon"
   }
 
   for _,i in pairs(cmds) do
@@ -94,7 +93,7 @@ do
 end
 
 -- Let caps-lock be another escape button.
-os.execute("setxkbmap -layout dk -option 'caps:escape'")
+os.execute("setxkbmap -layout dk -option -option 'caps:escape'")
 
 -- }}}
 --
@@ -246,6 +245,17 @@ root.buttons(awful.util.table.join(
 
 -- {{{ Key bindings
 globalkeys = awful.util.table.join(
+	-- APW hotkeys
+	awful.key({ }, "XF86AudioRaiseVolume",  APW.Up),
+	awful.key({ }, "XF86AudioLowerVolume",  APW.Down),
+	awful.key({ }, "XF86AudioMute",         APW.ToggleMute),
+
+	awful.key({ }, "XF86KbdBrightnessDown", function () awful.util.spawn("asus-kbd-backlight down") end),
+	awful.key({ }, "XF86KbdBrightnessUp",   function () awful.util.spawn("asus-kbd-backlight up") end),
+	awful.key({ }, "XF86MonBrightnessUp",   function () awful.util.spawn("xbacklight -inc 5 -time 0") end),
+	awful.key({ }, "XF86MonBrightnessDown",   function () awful.util.spawn("xbacklight -dec 5 -time 0") end),
+	awful.key({ "Mod1", "Control" }, "l",   function () awful.util.spawn("xsecurelock") end),
+
     awful.key({ modkey,           }, "Left",   awful.tag.viewprev       ),
     awful.key({ modkey,           }, "Right",  awful.tag.viewnext       ),
     awful.key({ modkey,           }, "Escape", awful.tag.history.restore),
@@ -264,14 +274,17 @@ globalkeys = awful.util.table.join(
     --        awful.client.focus.byidx(-1)
     --        if client.focus then client.focus:raise() end
     --    end),
+
     awful.key({ modkey,           }, "w", function () mymainmenu:show() end),
 
     -- Layout manipulation
     awful.key({ modkey, "Shift"   }, "j", function () awful.client.swap.byidx(  1)    end),
     awful.key({ modkey, "Shift"   }, "k", function () awful.client.swap.byidx( -1)    end),
     awful.key({ modkey,           }, "u", awful.client.urgent.jumpto),
+
 	-- Alt+tab to switch between Screens --
     awful.key({ "Mod1",           }, "Tab", function () awful.screen.focus_relative(-1) end),
+
     awful.key({ modkey,           }, "Tab",
         function ()
             awful.client.focus.history.previous()
@@ -309,12 +322,13 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey, "Control" }, "r", awesome.restart),
     awful.key({ modkey, "Shift"   }, "q", awesome.quit),
 
-    --awful.key({ modkey,           }, "l",     function () awful.tag.incmwfact( 0.05)    end),
-    --awful.key({ modkey,           }, "h",     function () awful.tag.incmwfact(-0.05)    end),
-    awful.key({ modkey, "Shift"   }, "h",     function () awful.tag.incnmaster( 1)      end),
-    awful.key({ modkey, "Shift"   }, "l",     function () awful.tag.incnmaster(-1)      end),
-    --awful.key({ modkey, "Control" }, "h",     function () awful.tag.incncol( 1)         end),
-    --awful.key({ modkey, "Control" }, "l",     function () awful.tag.incncol(-1)         end),
+    --awful.key({ modkey,           }, "+",     function () awful.tag.incmwfact( 0.05)    end),
+    --awful.key({ modkey,           }, "-",     function () awful.tag.incmwfact(-0.05)    end),
+    --awful.key({ modkey, "Shift"   }, "h",     function () awful.tag.incnmaster( 1)      end),
+    --awful.key({ modkey, "Shift"   }, "l",     function () awful.tag.incnmaster(-1)      end),
+    awful.key({ modkey, "Shift"   }, "h",     function () awful.tag.incncol( 1)         end),
+    awful.key({ modkey, "Shift"   }, "l",     function () awful.tag.incncol(-1)         end),
+
     awful.key({ modkey,           }, "space", function () awful.layout.inc(layouts,  1) end),
     awful.key({ modkey, "Shift"   }, "space", function () awful.layout.inc(layouts, -1) end),
 
@@ -335,16 +349,6 @@ globalkeys = awful.util.table.join(
 )
 
 clientkeys = awful.util.table.join(
-	-- APW hotkeys
-	awful.key({ }, "XF86AudioRaiseVolume",  APW.Up),
-	awful.key({ }, "XF86AudioLowerVolume",  APW.Down),
-	awful.key({ }, "XF86AudioMute",         APW.ToggleMute),
-
-	awful.key({ }, "XF86KbdBrightnessDown", function () awful.util.spawn("asus-kbd-backlight down") end),
-	awful.key({ }, "XF86KbdBrightnessUp",   function () awful.util.spawn("asus-kbd-backlight up") end),
-	awful.key({ }, "XF86ScreenBrightnessUp",   function () awful.util.spawn("asus-screen-brightness up") end),
-	awful.key({ }, "XF86ScreenBrightnessDown",   function () awful.util.spawn("asus-screen-brightness down") end),
-	awful.key({ "Mod1", "Control" }, "l",   function () awful.util.spawn("i3lock -c 000000") end),
     awful.key({ modkey,           }, "f",      function (c) c.fullscreen = not c.fullscreen  end),
     awful.key({ modkey, "Shift"   }, "c",      function (c) c:kill()                         end),
     awful.key({ modkey, "Control" }, "space",  awful.client.floating.toggle                     ),
@@ -434,6 +438,7 @@ awful.rules.rules = {
                      border_color = "black",
                      size_hints_honor = false,
                      opacity = 0.9 } },
+	-- flash in chromium?
     { rule = { instance = "exe" },
       properties = { floating = true } },
     { rule = { class = "URxvt" },
