@@ -1,0 +1,139 @@
+#
+# ~/.bashrc
+#
+
+# Add timestamps to history
+HISTTIMEFORMAT='%y/%m/%d-%T%z '
+
+# If not running interactively, don't do anything
+[[ $- != *i* ]] && return
+
+#. /etc/profile.d/vte.sh
+
+. /usr/share/bash-completion/bash_completion
+. /usr/share/fzf/completion.bash
+. /usr/share/fzf/key-bindings.bash
+
+# Used for storing my dotfiles.
+# References here: https://news.ycombinator.com/item?id=11071754
+# Main thread: https://news.ycombinator.com/item?id=11070797
+# Blog post: https://developer.atlassian.com/blog/2016/02/best-way-to-store-dotfiles-git-bare-repo/
+alias config='/usr/bin/git --git-dir=${HOME}/.dotfiles/ --work-tree=${HOME}'
+
+alias ls='ls --color=auto'
+alias tree="tree -C"
+alias clip='wl-copy -n'
+
+# Use nvim \o/
+alias vim=nvim
+export EDITOR=nvim
+alias vimdiff="nvim -d"
+
+alias signal='signal-desktop -ozone-platform=wayland'
+
+alias d='dotref -d ~/.dotref'
+
+# Ignore commands that start with space:ignore duplicate commands
+export HISTCONTROL=ignorespace:ignoredups
+
+# Make command history bigger (default 500)
+export HISTSIZE=5000
+export HISTFILESIZE=2000
+
+################################################################################
+                                 ## SET PATH ##
+################################################################################
+
+function join() { local IFS="$1"; shift; echo "$*"; }
+PATHS=(
+~/.go/bin               # GO
+#~/.cargo/bin            # RUST
+#~/.node_modules/bin     # NODE
+~/.local/bin            # Homemade executables
+~/.gem/ruby/3.0.0/bin/
+)
+
+# Finally define the path
+PATH=$PATH:$(join : ${PATHS[@]})
+
+################################################################################
+                   ## Set variables for external programs ##
+################################################################################
+
+export GOPATH="${HOME}/.go:${HOME}/Code/go"
+export GOROOT="/usr/lib/go"
+
+export NPM_PACKAGES="${HOME}/.node_modules"
+
+# R user libraries (duh)
+export R_LIBS_USER="~/.R"
+
+alias open=xdg-open
+alias R="R --quiet"
+
+
+################################################################################
+                          ### UPDATE PROMPT COMMAND ##
+################################################################################
+PS1='[\u@\h \W]\$ '
+
+# Use powerline-go from AUR
+POWERLINE_PATH=/usr/bin/powerline-go
+function _update_ps1() {
+	# The test overwrites $?, save it first.
+	RET=$?
+	if [[ -e ${POWERLINE_PATH} ]]; then
+		PS1="$(${POWERLINE_PATH} -error $RET -newline -colorize-hostname -max-width 100 -modules 'venv,user,host,ssh,cwd,perms,git,hg,jobs,exit,root')"
+	fi
+}
+
+if [ "$TERM" != "linux" ]; then
+    PROMPT_COMMAND="_update_ps1; ${PROMPT_COMMAND}"
+fi
+
+################################################################################
+            # Print description of background image set by nasaiotd.
+################################################################################
+
+if [[ -e ~/.message ]]; then
+	w=$(( $(tput cols) ))
+
+	if [[ ${w} -gt 80 ]]; then
+		w=80
+	fi
+	cat ~/.message | fold -s -w ${w}
+fi
+
+################################################################################
+                  # Check state of pass and dotfile repository
+################################################################################
+if [[ -e ${HOME}/.checkstate.sh ]]; then
+	bash ${HOME}/.checkstate.sh
+fi
+
+################################################################################
+                               # Misc. exports #
+################################################################################
+
+export XDG_MUSIC_DIR=~/Media/Music
+
+[[ $PS1 && -f /usr/share/bash-completion/bash_completion ]] && \
+    . /usr/share/bash-completion/bash_completion
+
+
+p () {
+    find . -name "*.pdf" \
+    | fast-p \
+    | fzf --read0 --reverse -e -d $'\t'  \
+        --preview-window down:80% --preview '
+            v=$(echo {q} | tr " " "|");
+            echo -e {1}"\n"{2} | grep -E "^|$v" -i --color=always;
+        ' \
+    | cut -z -f 1 -d $'\t' | tr -d '\n' | (xargs -r --null evince > /dev/null 2> /dev/null &)
+}
+
+################################################################################
+                             # Misc. definitions #
+################################################################################
+
+test -r ~/.dir_colors && eval $(dircolors ~/.dir_colors)

@@ -1,0 +1,11 @@
+{
+  "create": [
+    {"name": "~/.config/sway", "mode": "750"},
+    {"name": "~/.config/sway/config.d", "mode": "750"}
+  ],
+  "link": [
+    {"src": "bash/bashrc", "dst": "~/.bashrc"},
+    {"src": "sway/config", "dst": "~/.config/sway/config"},
+    {"src": "sway/xf86-keybindings.conf", "dst": "~/.config/sway/config.d/xf86-keybindings"}
+  ]
+}
