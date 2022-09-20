@@ -13,7 +13,7 @@
   "link": [
     {"src": "bash/bashrc", "dst": "~/.bashrc"},
     {"src": "sway/config", "dst": "~/.config/sway/config"},
-    {"src": "sway/xf86-keybindings.conf", "dst": "~/.config/sway/config.d/xf86-keybindings"},
+    {"src": "sway/xf86-keybindings.conf", "dst": "~/.config/sway/config.d/xf86-keybindings.conf"},
     {"src": "chromium-flags.conf", "dst": "~/.config/chromium-flags.conf"},
     {"src": "chrome-flags.conf", "dst": "~/.config/chrome-flags.conf"},
     {"src": "nvim/completion.vim", "dst": "~/.config/nvim/completion.vim"},
