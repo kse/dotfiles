@@ -1,0 +1,5 @@
+key_bindings:
+  - { key: T,   mods: Control|Shift, action: SpawnNewInstance }
+
+env:
+  TERM: xterm-256color

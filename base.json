@@ -1,11 +1,26 @@
 {
   "create": [
     {"name": "~/.config/sway", "mode": "750"},
-    {"name": "~/.config/sway/config.d", "mode": "750"}
+    {"name": "~/.config/sway/config.d", "mode": "750"},
+    {"name": "~/.config/nvim", "mode": "750"},
+    {"name": "~/.config/waybar", "mode": "750"},
+    {"name": "~/.config/mako", "mode": "750"},
+    {"name": "~/.config/alacritty", "mode": "750"},
+    {"name": "~/.config/git", "mode": "750"}
   ],
   "link": [
     {"src": "bash/bashrc", "dst": "~/.bashrc"},
     {"src": "sway/config", "dst": "~/.config/sway/config"},
-    {"src": "sway/xf86-keybindings.conf", "dst": "~/.config/sway/config.d/xf86-keybindings"}
+    {"src": "sway/xf86-keybindings.conf", "dst": "~/.config/sway/config.d/xf86-keybindings"},
+    {"src": "chromium-flags.conf", "dst": "~/.config/chromium-flags.conf"},
+    {"src": "chrome-flags.conf", "dst": "~/.config/chrome-flags.conf"},
+    {"src": "nvim/completion.vim", "dst": "~/.config/nvim/completion.vim"},
+    {"src": "nvim/vimrc", "dst": "~/.config/nvim/vimrc"},
+    {"src": "nvim/init.vim", "dst": "~/.config/nvim/init.vim"},
+    {"src": "waybar/config", "dst": "~/.config/waybar/config"},
+    {"src": "waybar/style.css", "dst": "~/.config/waybar/style.css"},
+    {"src": "mako/config", "dst": "~/.config/mako/config"},
+    {"src": "alacritty/alacritty.yml", "dst": "~/.config/alacritty/alacritty.yml"},
+    {"src": "git/ignore", "dst": "~/.config/git/ignore"}
   ]
 }
