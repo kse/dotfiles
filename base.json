@@ -1,4 +1,5 @@
 {
+  "extends": ["secrets"],
   "create": [
     {"name": "~/.config/sway", "mode": "750"},
     {"name": "~/.config/sway/config.d", "mode": "750"},
@@ -22,5 +23,9 @@
     {"src": "mako/config", "dst": "~/.config/mako/config"},
     {"src": "alacritty/alacritty.yml", "dst": "~/.config/alacritty/alacritty.yml"},
     {"src": "git/ignore", "dst": "~/.config/git/ignore"}
+  ],
+  "template": [
+    {"src": "git/config", "dst": "~/.config/git/config"},
+    {"src": "git/lunar.conf", "dst": "~/.config/git/lunar.conf"}
   ]
 }

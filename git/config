@@ -1,0 +1,55 @@
+[user]
+	name = $git_config_name
+	email = $git_config_email
+  signingkey = $git_config_signingkey
+
+[commit]
+	gpgsign = true
+
+[includeIf "gitdir:**/Lunar/**/.git"]
+  path = ~/.config/git/lunar.conf
+
+[color]
+	status = auto
+	branch = auto
+	interactive = auto
+	diff = auto
+
+[apply]
+	whitespace = warn
+
+[alias]
+	co = checkout
+	cp = cherry-pick
+	st = status -sb
+	ci = commit
+	b  = branch
+	lg = log --oneline --graph --decorate
+
+[include]
+	path = .github
+
+[push]
+	default = tracking
+
+[help]
+	autocorrect = 1
+
+[core]
+	excludesfile = ~/.config/git/ignore
+
+[pull]
+	rebase = false
+[init]
+	defaultBranch = main
+[merge]
+	tool = nvimdiff
+[mergetool]
+	keepBackup = false
+
+[tag]
+  gpgsign = true
+  sort = v:refname
+
+[url "git@github.com:"]
+	insteadOf = https://github.com/
