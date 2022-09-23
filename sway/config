@@ -82,7 +82,6 @@ bindsym Control+Alt+l exec $lock_command
 input * {
     xkb_layout "dk"
     xkb_model "pc105"
-    xkb_variant ",qwerty"
     xkb_options "caps:escape"
 }
 
