@@ -13,9 +13,8 @@ set $left h
 set $down j
 set $up k
 set $right l
+
 # Your preferred terminal emulator
-# TODO: Fixup alacritty so it behaves as I want it.
-# set $term foot
 set $term alacritty
 
 # Preferred browser
@@ -124,7 +123,7 @@ default_border pixel 2
 
     # Start your launcher
     bindsym $mod+d exec $menu
-    #bindsym $mod+d exec $runmenu
+    bindsym $mod+Alt+d exec $runmenu
 
     # Drag floating windows by holding down $mod and left mouse button.
     # Resize them with right mouse button + $mod.
