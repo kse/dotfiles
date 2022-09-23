@@ -197,8 +197,9 @@ default_border pixel 2
     }
 
 
-    # Navigate to next workspace
-    bindsym Alt+Tab workspace next
+    # Change output focus
+    bindsym Alt+Tab focus output right
+    bindsym Alt+Shift+Tab focus output right
 #
 # Layout stuff:
 #
