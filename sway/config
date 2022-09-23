@@ -277,8 +277,8 @@ bindsym $mod+r mode "resize"
 
 bar swaybar_command waybar
 
-bindswitch --locked lid:on output eDP-1 disable
-bindswitch --locked lid:off output eDP-1 enable
+bindswitch --reload --locked lid:on output eDP-1 disable
+bindswitch --reload --locked lid:off output eDP-1 enable
 
 include /etc/sway/config.d/*
 include ~/.config/sway/config.d/*.conf
