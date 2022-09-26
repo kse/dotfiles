@@ -49,8 +49,6 @@ Plugin 'fatih/vim-go'
 
 Plugin 'mbbill/undotree'
 
-" TODO: Uninstall
-"Plugin 'ellisonleao/gruvbox.nvim'
 Plugin 'savq/melange'
 
 " TODO: Setup and make work
@@ -58,19 +56,11 @@ Plugin 'savq/melange'
 
 "Plugin 'godlygeek/tabular'
 "
-"Plugin 'chriskempson/base16-vim'
-"Plugin 'chriskempson/vim-tomorrow-theme'
-
 Plugin 'junegunn/vim-easy-align'
-"Plugin 'thoughtbot/vim-rspec'
 
-"Plugin 'ruanyl/coverage.vim'
-"
 Plugin 'mechatroner/rainbow_csv'
 Plugin 'jpalardy/vim-slime'
 
-"Plugin 'vim-ruby/vim-ruby'
-"Plugin 'ngmy/vim-rubocop'
 Plugin 'nvim-treesitter/nvim-treesitter'
 
 "Plugin 'hashivim/vim-terraform'
@@ -153,24 +143,6 @@ set ruler
 "let g:airline_symbols.linenr = '¶'
 "let g:airline_symbols.whitespace = '≑'
 
-
-
-" TODO: Make this toggleable.
-" let g:syntastic_python_python_exec = '/path/to/python3'
-"let g:syntastic_java_javac_config_file_enabled = 1
-
-"set statusline+=%#warningmsg#
-"set statusline+=%{SyntasticStatuslineFlag()}
-"set statusline+=%*
-"
-"let g:syntastic_always_populate_loc_list = 0
-"let g:syntastic_auto_loc_list = 0
-"let g:syntastic_check_on_open = 1
-"let g:syntastic_check_on_wq = 0
-
-"let g:ycm_gocode_binary_path = "~/.go/bin/gocode"
-"let g:ycm_log_level = 'debug'
-
 set backspace=indent,eol,start
 
 filetype on
@@ -207,15 +179,14 @@ set pastetoggle=<F11>
 "Make vim set the title of the window
 set title
 
-"Remap tab to move between windows
-"map <Space> <c-W>w
+" Remap Tab to move between tabs
 map <silent> <Tab> :tabnext<CR>
 map <silent> <S-Tab> :tabprev<CR>
 map <silent> <Leader><Tab> :+tabmove<CR>
 map <silent> <Leader><S-Tab> :-tabmove<CR>
 
+" Close the current tab, along with all the windows
 map <silent> <C-w>C :tabclose<CR>
-
 
 let g:C_Ctrl_j = 'off'
 "Map C - hjkl to move between windows
@@ -223,20 +194,6 @@ nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
-
-" Use the damn hjkl keys
-"map <up> <nop>
-"map <down> <nop>
-"map <left> <nop>
-"map <right> <nop>
-"imap <up> <nop>
-"imap <down> <nop>
-"imap <left> <nop>
-"imap <right> <nop>
-
-"if has("autocmd")
-"	autocmd Filetype scm vmap :'<,'>w !petite <S-r>
-"endif
 
 " Indent/outdent visual selection and reselect
 vnoremap < <gv
