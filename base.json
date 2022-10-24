@@ -8,7 +8,8 @@
     {"name": "~/.config/mako", "mode": "750"},
     {"name": "~/.config/alacritty", "mode": "750"},
     {"name": "~/.config/git", "mode": "750"},
-    {"name": "~/.config/environment.d", "mode": "750"}
+    {"name": "~/.config/environment.d", "mode": "750"},
+    {"name": "~/.config/xdg-desktop-portal-wlr", "mode": "750"}
   ],
   "link": [
     {"src": "bash/bashrc", "dst": "~/.bashrc"},
@@ -24,7 +25,8 @@
     {"src": "mako/config", "dst": "~/.config/mako/config"},
     {"src": "alacritty/alacritty.yml", "dst": "~/.config/alacritty/alacritty.yml"},
     {"src": "git/ignore", "dst": "~/.config/git/ignore"},
-    {"src": "environment.d/path.conf", "dst": "~/.config/environment.d/path.conf"}
+    {"src": "environment.d/path.conf", "dst": "~/.config/environment.d/path.conf"},
+    {"src": "xdg-desktop-portal-wlr/config", "dst": "~/.config/xdg-desktop-portal-wlr/config"}
   ],
   "template": [
     {"src": "git/config", "dst": "~/.config/git/config"},
