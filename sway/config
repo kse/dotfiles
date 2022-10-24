@@ -78,15 +78,15 @@ bindsym Control+Alt+l exec $lock_command
 # You can get the names of your inputs by running: swaymsg -t get_inputs
 # Read `man 5 sway-input` for more information about this section.
 
-input * {
+input type:keyboard {
     xkb_layout "dk"
     xkb_model "pc105"
     xkb_options "caps:escape"
 }
 
-input "2:10:TPPS/2_Elan_TrackPoint" {
+input type:pointer {
   accel_profile "adaptive"
-  pointer_accel 0.4
+  pointer_accel 0.2
 }
 
 ### Graphical customization
