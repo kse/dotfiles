@@ -78,6 +78,7 @@ Plugin 'tpope/vim-commentary'
 Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-unimpaired'
 Plugin 'flowtype/vim-flow', { 'do': 'npm install -g flow-bin' }
+Plugin 'wsdjeg/vim-todo'
 call vundle#end()
 
 filetype plugin indent on
@@ -311,13 +312,6 @@ nmap <F8> :TagbarToggle<CR>
 autocmd FileType tex :NoMatchParen
 au FileType tex setlocal nocursorline
 
-map <silent> <C-n> :NERDTreeToggle<CR>
-
-let g:NERDTreeDirArrowExpandable = '▸'
-let g:NERDTreeDirArrowCollapsible = '▾'
-let g:NERDTreeMinimalUI = 1
-"let NERDTreeDirArrows = 1
-
 if has("gui_running")
 	set guifont=Inconsolata\ 8
 endif
@@ -443,6 +437,26 @@ function LargeFile()
  " display message
  autocmd VimEnter *  echo "The file is larger than " . (g:LargeFile / 1024 / 1024) . " MB, so some options are changed (see .vimrc for details)."
 endfunction
+
+"                           ==================
+"                           ==== nerdtree ====
+"                           ==================
+
+map <silent> <C-n> :NERDTreeToggle<CR>
+
+let g:NERDTreeDirArrowExpandable = '▸'
+let g:NERDTreeDirArrowCollapsible = '▾'
+let g:NERDTreeMinimalUI = 1
+let g:NERDTreeWinSize   = 42
+
+nmap <silent> <leader>nf :NERDTreeFind<cr>
+
+"                           ======================
+"                           ==== locationlist ====
+"                           ======================
+
+nmap <silent> <leader>lo :lopen<cr>
+nmap <silent> <leader>ln :lnext<cr>
 
 
 "                              ================
