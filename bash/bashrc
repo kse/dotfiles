@@ -8,17 +8,11 @@ HISTTIMEFORMAT='%y/%m/%d-%T%z '
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
-#. /etc/profile.d/vte.sh
-
-. /usr/share/bash-completion/bash_completion
-. /usr/share/fzf/completion.bash
-. /usr/share/fzf/key-bindings.bash
-
-# Used for storing my dotfiles.
-# References here: https://news.ycombinator.com/item?id=11071754
-# Main thread: https://news.ycombinator.com/item?id=11070797
-# Blog post: https://developer.atlassian.com/blog/2016/02/best-way-to-store-dotfiles-git-bare-repo/
-alias config='/usr/bin/git --git-dir=${HOME}/.dotfiles/ --work-tree=${HOME}'
+if [[ $PS1 && -f /usr/share/bash-completion/bash_completion ]]; then
+  . /usr/share/bash-completion/bash_completion
+  . /usr/share/fzf/completion.bash
+  . /usr/share/fzf/key-bindings.bash
+fi
 
 alias ls='ls --color=auto'
 alias tree="tree -C"
@@ -26,10 +20,8 @@ alias clip='wl-copy -n'
 
 # Use nvim \o/
 alias vim=nvim
-export EDITOR=nvim
 alias vimdiff="nvim -d"
-
-alias signal='signal-desktop -ozone-platform=wayland'
+export EDITOR=nvim
 
 alias d='dotref -d ~/.dotref'
 
@@ -47,10 +39,10 @@ export HISTFILESIZE=2000
 function join() { local IFS="$1"; shift; echo "$*"; }
 PATHS=(
 ~/.go/bin               # GO
+~/.local/bin            # Homemade executables
 #~/.cargo/bin            # RUST
 #~/.node_modules/bin     # NODE
-~/.local/bin            # Homemade executables
-~/.gem/ruby/3.0.0/bin/
+#~/.gem/ruby/3.0.0/bin/ 
 )
 
 # Finally define the path
@@ -67,10 +59,13 @@ export NPM_PACKAGES="${HOME}/.node_modules"
 
 # R user libraries (duh)
 export R_LIBS_USER="~/.R"
-
-alias open=xdg-open
 alias R="R --quiet"
 
+alias open=xdg-open
+
+if [[ -e ~/.config/bash/goprivate.sh ]]; then
+  . ~/.config/bash/goprivate.sh
+fi
 
 ################################################################################
                           ### UPDATE PROMPT COMMAND ##
@@ -92,34 +87,10 @@ if [ "$TERM" != "linux" ]; then
 fi
 
 ################################################################################
-            # Print description of background image set by nasaiotd.
-################################################################################
-
-if [[ -e ~/.message ]]; then
-	w=$(( $(tput cols) ))
-
-	if [[ ${w} -gt 80 ]]; then
-		w=80
-	fi
-	cat ~/.message | fold -s -w ${w}
-fi
-
-################################################################################
-                  # Check state of pass and dotfile repository
-################################################################################
-if [[ -e ${HOME}/.checkstate.sh ]]; then
-	bash ${HOME}/.checkstate.sh
-fi
-
-################################################################################
                                # Misc. exports #
 ################################################################################
 
 export XDG_MUSIC_DIR=~/Media/Music
-
-[[ $PS1 && -f /usr/share/bash-completion/bash_completion ]] && \
-    . /usr/share/bash-completion/bash_completion
-
 
 p () {
     find . -name "*.pdf" \
