@@ -8,7 +8,7 @@ lua << EOF
 
   -- Setup lspconfig.
   local nvim_lsp = require('lspconfig')
-  local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+  local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
 
   local has_words_before = function()
     local line, col = unpack(vim.api.nvim_win_get_cursor(0))
