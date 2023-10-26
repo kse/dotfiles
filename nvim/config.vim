@@ -34,15 +34,17 @@ Plugin 'simrat39/rust-tools.nvim'
 Plugin 'hrsh7th/cmp-vsnip'
 Plugin 'hrsh7th/vim-vsnip'
 
-"Plugin 'Valloric/YouCompleteMe'
-Plugin 'dense-analysis/ale'
+"Plugin 'dense-analysis/ale'
+
+"Plugin 'peterrincker/vim-argumentative'
+
+Plugin 'ruanyl/vim-gh-line'
 
 Plugin 'ervandew/supertab'
-Plugin 'ctrlpvim/ctrlp.vim'
+"Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'majutsushi/tagbar'
-Plugin 'easymotion/vim-easymotion'
 
 Plugin 'rust-lang/rust.vim'
 Plugin 'fatih/vim-go'
@@ -54,14 +56,11 @@ Plugin 'savq/melange'
 " TODO: Setup and make work
 "Plugin 'Chiel92/vim-autoformat'
 
-"Plugin 'godlygeek/tabular'
-"
-Plugin 'junegunn/vim-easy-align'
 
-Plugin 'mechatroner/rainbow_csv'
+"Plugin 'mechatroner/rainbow_csv'
 Plugin 'jpalardy/vim-slime'
 
-Plugin 'nvim-treesitter/nvim-treesitter'
+"Plugin 'nvim-treesitter/nvim-treesitter'
 
 "Plugin 'hashivim/vim-terraform'
 
@@ -71,14 +70,21 @@ Plugin 'nvim-treesitter/nvim-treesitter'
 " Supports for ale in lightline
 "Plugin 'maximbaz/lightline-ale'
 
+Plugin 'evanleck/vim-svelte'
+
+Plugin 'eandrju/cellular-automaton.nvim'
+
 " Oh Tim..
-Plugin 'tpope/vim-surround'
-Plugin 'tpope/vim-fugitive'
-Plugin 'tpope/vim-commentary'
-Plugin 'tpope/vim-repeat'
-Plugin 'tpope/vim-unimpaired'
+"Plugin 'tpope/vim-surround'
+"Plugin 'tpope/vim-fugitive'
+"Plugin 'tpope/vim-commentary'
+"Plugin 'tpope/vim-repeat'
+"Plugin 'tpope/vim-unimpaired'
+"Plugin 'tpope/vim-abolish'
 Plugin 'flowtype/vim-flow', { 'do': 'npm install -g flow-bin' }
-Plugin 'wsdjeg/vim-todo'
+
+"Plugin 'folke/todo-comments.nvim'
+"Plugin 'nvim-lua/plenary.nvim'
 call vundle#end()
 
 filetype plugin indent on
@@ -114,7 +120,8 @@ set showmatch		" Show matching brackets.
 set mouse=		    " Disable mouse usage
 set hlsearch		" Enable search highlighting
 set autoindent		" Enable automatic indentation
-set foldmethod=marker
+set foldmethod=manual
+"set foldlevel=2
 set noshowmode      " Let airline handle showing mode
 set shortmess+=I
 set undodir=~/.vim/undo               " For persistent undo
@@ -201,8 +208,8 @@ vnoremap < <gv
 vnoremap > >gv
 
 set termguicolors
-"colorscheme Tomorrow-Night
-colorscheme melange
+let g:gruvbox_material_background = "hard"
+colorscheme gruvbox-material
 
 let Tlist_Ctags_Cmd = "/usr/bin/ctags"
 let Tlist_WinWidth = 30
@@ -233,6 +240,10 @@ endfunc
 nnoremap <silent> <C-m> :call NumberToggle()<cr>
 set relativenumber
 set number
+
+" The quickfix and locationlist don't need relative numbers, for easy
+" navigation.
+au FileType qf setlocal norelativenumber colorcolumn=
 
 let mapleader="-"
 
@@ -272,19 +283,17 @@ if filereadable(".vim.custom")
 	so .vim.custom
 endif
 
-let g:gitgutter_enabled = 1
-let g:gitgutter_highlight_lines = 1
-let g:gitgutter_signs = 0
+let g:gitgutter_enabled = 0
+let g:gitgutter_highlight_lines = 0
+let g:gitgutter_signs = 1
 "let g:gitgutter_diff_args = '-w --word-diff=plain --histogram'
 "let g:gitgutter_override_sign_column_highlight = 0
 
+
 hi clear SignColumn
-"hi DiffAdd ctermbg=green
 hi GitGutterAddLine guibg=#142814
 hi GitGutterChangeLine guibg=#242414
 hi GitGutterDeleteLine guibg=#421414
-"hi DiffChange ctermbg=green
-"hi DiffDelete ctermbg=red
 
 "if getcwd()~=#'^\(/home/kse/Code/cave/\)'
 "	set secure exrc
@@ -345,11 +354,14 @@ let g:lightline.component_type = {
 
 let g:ale_sign_column_always = 1
 let g:ale_linters = {
-			\ 'go': ['staticcheck', 'golint', 'gofmt'],
       \ 'cs': ['csc', 'omnisharp'],
       \ 'ruby': ['rubocop'],
       \ 'terraform': ['terraform_ls']
 			\}
+
+let g:ale_linters_ignore = {
+			\ 'go': ['staticcheck', 'golint', 'gofmt'],
+      \}
 
 let g:ale_fix_on_save = 1
 let g:ale_fixers = {
@@ -412,14 +424,13 @@ endfunction
 "                           ==== nerdtree ====
 "                           ==================
 
-map <silent> <C-n> :NERDTreeToggle<CR>
+map <silent> <C-n> :NvimTreeToggle<CR>
+nmap <silent> <leader>nf :NvimTreeFindFile<cr>
 
-let g:NERDTreeDirArrowExpandable = '▸'
-let g:NERDTreeDirArrowCollapsible = '▾'
-let g:NERDTreeMinimalUI = 1
-let g:NERDTreeWinSize   = 42
-
-nmap <silent> <leader>nf :NERDTreeFind<cr>
+"let g:NERDTreeDirArrowExpandable = '▸'
+"let g:NERDTreeDirArrowCollapsible = '▾'
+"let g:NERDTreeMinimalUI = 1
+"let g:NERDTreeWinSize   = 42
 
 "                           ======================
 "                           ==== locationlist ====
@@ -427,6 +438,7 @@ nmap <silent> <leader>nf :NERDTreeFind<cr>
 
 nmap <silent> <leader>lo :lopen<cr>
 nmap <silent> <leader>ln :lnext<cr>
+nmap <silent> <leader>lb :lbefore<cr>
 
 
 "                              ================
@@ -461,8 +473,8 @@ let g:tagbar_type_go = {
     \ 'ctagsargs' : '-sort -silent'
 \ }
 
-autocmd FileType go nmap <Leader>c <Plug>(go-coverage-toggle)
-autocmd FileType go nmap <Leader>i <Plug>(go-info)
+"autocmd FileType go nmap <Leader>c <Plug>(go-coverage-toggle)
+"autocmd FileType go nmap <Leader>i <Plug>(go-info)
 
 let g:go_highlight_build_constraints = 1
 let g:go_highlight_operators = 1
@@ -478,10 +490,9 @@ let g:go_diagnostics_enabled = 1
 let g:go_diagnostics_level = 2
 
 let g:go_gopls_use_placeholders = 1
-"let g:go_metalinter_command = "golangci-lint"
-"let g:go_metalinter_enabled = ['vet', 'revive']
+"let g:go_gopls_enabled = 0
+let g:go_metalinter_command = "golangci-lint"
 "let g:go_metalinter_autosave_enabled = ['vet', 'revive']
-"let g:go_metalinter_autosave = 1
 
 let g:go_debug_mappings = {
     \ '(go-debug-continue)': {'key': 'c', 'arguments': '<nowait>'},
@@ -490,11 +501,18 @@ let g:go_debug_mappings = {
     \ '(go-debug-print)': {'key': 'p'},
 \ }
 
+let g:go_doc_popup_window = 1
+
 map <leader>ds :GoDebugStart<cr>
 map <leader>dt :GoDebugStop<cr>
 map <leader>db :GoDebugBreakpoint<cr>
 
 let g:go_list_type = "quickfix"
+let g:go_list_type_commands = {
+  \ "GoLint": "quickfix", "GoMetaLinter": "quickfix", }
+
+
+let g:go_fold_enable = ['block', 'import', 'varconst']
 
 "                               ==============
 "                               ==== Misc ====

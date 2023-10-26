@@ -25,6 +25,12 @@
         }
     },
 
+    "sway/window": {
+      "rewrite": {
+         "(.*) - Chromium": "🌎 $1",
+       }
+    },
+
     "tray": {
         "icon-size": 18,
         "spacing": 12

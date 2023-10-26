@@ -8,6 +8,8 @@ HISTTIMEFORMAT='%y/%m/%d-%T%z '
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
+alias fzf="fzf --no-mouse"
+
 if [[ $PS1 && -f /usr/share/bash-completion/bash_completion ]]; then
   . /usr/share/bash-completion/bash_completion
   . /usr/share/fzf/completion.bash
@@ -22,6 +24,8 @@ alias clip='wl-copy -n'
 alias vim=nvim
 alias vimdiff="nvim -d"
 export EDITOR=nvim
+
+alias iv='vim -R -c ":map Q :q!<CR>" -'
 
 alias d='dotref -d ~/.dotref'
 
@@ -42,7 +46,7 @@ PATHS=(
 ~/.local/bin            # Homemade executables
 #~/.cargo/bin            # RUST
 #~/.node_modules/bin     # NODE
-#~/.gem/ruby/3.0.0/bin/ 
+#~/.gem/ruby/3.0.0/bin/
 )
 
 # Finally define the path
@@ -91,6 +95,7 @@ fi
 ################################################################################
 
 export XDG_MUSIC_DIR=~/Media/Music
+export SSH_AUTH_SOCK=$XDG_RUNTIME_DIR/ssh-agent.socket
 
 p () {
     find . -name "*.pdf" \
