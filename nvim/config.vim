@@ -213,7 +213,7 @@ colorscheme gruvbox-material
 
 let Tlist_Ctags_Cmd = "/usr/bin/ctags"
 let Tlist_WinWidth = 30
-map <F4> :TlistToggle<cr>
+"map <F4> :TlistToggle<cr>
 
 map <C-g>a ggVG
 

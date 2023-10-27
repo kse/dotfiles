@@ -8,6 +8,9 @@ lsp_zero.on_attach(function(client, bufnr)
   lsp_zero.default_keymaps({buffer = bufnr})
 end)
 
+-- check if the cursor is at the end of a word.
+-- This could mean that completion is possible.
+-- Alternatively completion is not.
 local has_words_before = function()
   local line, col = unpack(vim.api.nvim_win_get_cursor(0))
   return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
@@ -16,8 +19,8 @@ end
 local next_completion = function(fallback)
   if cmp.visible() then
     cmp.select_next_item()
-  elseif has_words_before() then
-    cmp.complete()
+  --elseif has_words_before() then
+  --  cmp.complete()
   else
     fallback()
   end
@@ -26,18 +29,23 @@ end
 local previous_completion = function(fallback)
   if cmp.visible() then
     cmp.select_prev_item()
-  elseif has_words_before() then
-    cmp.complete()
+  --elseif has_words_before() then
+  --  cmp.complete()
   else
     fallback()
   end
 end
 
+-- confirm_or_begin_completion will confirm the completion choice or open the
+-- completion window.
 local confirm_or_begin_completion = function(fallback)
   if cmp.visible() then
     cmp.confirm({
+      -- BUG: I can't make this work properly. In certain cases it will replace
+      -- the existing text.
       behavior = cmp.ConfirmBehavior.Insert,
       --behavior = cmp.ConfirmBehavior.Replace,
+
       select = false,
     })
   elseif has_words_before() then
@@ -68,7 +76,9 @@ cmp.setup({
   })
 })
 
-require('lspconfig').gopls.setup({})
+require('lspconfig').gopls.setup({
+  preselect = cmp.PreselectMode.None
+})
 
 require('lspconfig').lua_ls.setup {
   on_init = function(client)
@@ -87,11 +97,7 @@ require('lspconfig').lua_ls.setup {
             checkThirdParty = false,
             library = {
               vim.env.VIMRUNTIME
-              -- "${3rd}/luv/library"
-              -- "${3rd}/busted/library",
             }
-            -- or pull in all of 'runtimepath'. NOTE: this is a lot slower
-            -- library = vim.api.nvim_get_runtime_file("", true)
           }
         }
       })

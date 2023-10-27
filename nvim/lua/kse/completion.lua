@@ -1,3 +1,6 @@
+-- THIS FILE IS DEPRECATED AS I HAVE MOVED ON TO lsp-zero --
+
+
 local servers = {'solargraph', 'gopls', 'terraformls', 'bashls', 'rust_analyzer'}
 --local servers = {'solargraph', 'terraformls', 'bashls', 'rust_analyzer'}
 
