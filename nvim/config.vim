@@ -47,7 +47,7 @@ Plugin 'airblade/vim-gitgutter'
 Plugin 'majutsushi/tagbar'
 
 Plugin 'rust-lang/rust.vim'
-Plugin 'fatih/vim-go'
+"Plugin 'fatih/vim-go'
 
 Plugin 'mbbill/undotree'
 

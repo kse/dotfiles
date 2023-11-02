@@ -98,7 +98,9 @@ return legendary.keymaps({
   -- Edit alternate file
   {
     '<LocalLeader>a',
-    '<Plug>(go-alternate-edit)',
+    function()
+      vim.cmd(':GoAlt')
+    end,
     hide = true,
     filters = {
       ft = 'go'
@@ -109,7 +111,7 @@ return legendary.keymaps({
   {
     '<LocalLeader>A',
     function()
-      vim.cmd(':GoAlternate!')
+      vim.cmd(':GoAlt!')
     end,
     hide = true,
     filters = {
@@ -162,6 +164,19 @@ return legendary.keymaps({
   {
     '<LocalLeader>tf',
     '<Plug>(go-test-func)',
+    hide = true,
+    filters = {
+      ft = 'go'
+    }
+  },
+
+  {
+    '<F14>',
+    function()
+      vim.lsp.util.rename(nil, nil, {
+        default = '',
+      })
+    end,
     hide = true,
     filters = {
       ft = 'go'

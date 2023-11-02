@@ -5,8 +5,21 @@ local cmp_action = require('lsp-zero').cmp_action()
 lsp_zero.on_attach(function(client, bufnr)
   -- see :help lsp-zero-keybindings
   -- to learn the available actions
-  lsp_zero.default_keymaps({buffer = bufnr})
+  lsp_zero.default_keymaps({ buffer = bufnr })
+  lsp_zero.buffer_autoformat()
 end)
+
+--lsp_zero.format_on_save({
+--  format_opts = {
+--    async = false,
+--    timeout_ms = 10000,
+--  },
+--  servers = {
+--    ['gopls'] = {'go'},
+--    ['rust_analyzer'] = {'rust'},
+--    ['tsserver'] = {'javascript', 'typescript'},
+--  }
+--})
 
 -- check if the cursor is at the end of a word.
 -- This could mean that completion is possible.
@@ -19,8 +32,8 @@ end
 local next_completion = function(fallback)
   if cmp.visible() then
     cmp.select_next_item()
-  --elseif has_words_before() then
-  --  cmp.complete()
+    --elseif has_words_before() then
+    --  cmp.complete()
   else
     fallback()
   end
@@ -29,8 +42,8 @@ end
 local previous_completion = function(fallback)
   if cmp.visible() then
     cmp.select_prev_item()
-  --elseif has_words_before() then
-  --  cmp.complete()
+    --elseif has_words_before() then
+    --  cmp.complete()
   else
     fallback()
   end
@@ -58,7 +71,7 @@ end
 cmp.setup({
   mapping = cmp.mapping.preset.insert({
     -- `Enter` key to confirm completion
-    ['<CR>'] = cmp.mapping.confirm({select = false}),
+    ['<CR>'] = cmp.mapping.confirm({ select = false }),
 
     -- Ctrl+Space to trigger completion menu
     ['<C-Space>'] = confirm_or_begin_completion,
@@ -71,19 +84,44 @@ cmp.setup({
     ['<C-u>'] = cmp.mapping.scroll_docs(-4),
     ['<C-d>'] = cmp.mapping.scroll_docs(4),
 
-    ["<Tab>"] = cmp.mapping(next_completion, {"i", "s"}),
+    ["<Tab>"] = cmp.mapping(next_completion, { "i", "s" }),
     ["<S-Tab>"] = cmp.mapping(previous_completion, { "i", "s" }),
   })
 })
 
 require('lspconfig').gopls.setup({
-  preselect = cmp.PreselectMode.None
+  settings = {
+    -- https://github.com/golang/vscode-go/blob/33339e687f2034f80ae3018a79db121c8e04feed/docs/settings.md
+    gopls = {
+      hints = {
+        assignVariableTypes = true,
+        compositeLiteralFields = true,
+        constantValues = true,
+        functionTypeParameters = true,
+        parameterNames = true,
+        rangeVariableTypes = true,
+      },
+      experimentalPostfixCompletions = true,
+      staticcheck = true,
+      usePlaceholders = true,
+      codelenses = {
+        generate = false,   --// Don't show the `go generate` lens.
+        gc_details = false, --// Show a code lens toggling the display of gc's choices.
+        test = false,
+      },
+      analyses = {
+        unusedparams = true,
+        shadow = true,
+        copylocks = true,
+      },
+    },
+  },
 })
 
 require('lspconfig').lua_ls.setup {
   on_init = function(client)
     local path = client.workspace_folders[1].name
-    if not vim.loop.fs_stat(path..'/.luarc.json') and not vim.loop.fs_stat(path..'/.luarc.jsonc') then
+    if not vim.loop.fs_stat(path .. '/.luarc.json') and not vim.loop.fs_stat(path .. '/.luarc.jsonc') then
       client.config.settings = vim.tbl_deep_extend('force', client.config.settings, {
         Lua = {
           runtime = {
@@ -108,3 +146,4 @@ require('lspconfig').lua_ls.setup {
   end
 }
 
+require('lspconfig').jsonls.setup({})
