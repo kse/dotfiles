@@ -94,11 +94,11 @@ require('lspconfig').gopls.setup({
     -- https://github.com/golang/vscode-go/blob/33339e687f2034f80ae3018a79db121c8e04feed/docs/settings.md
     gopls = {
       hints = {
-        assignVariableTypes = true,
+        assignVariableTypes = false,
         compositeLiteralFields = true,
         constantValues = true,
         functionTypeParameters = true,
-        parameterNames = true,
+        parameterNames = false,
         rangeVariableTypes = true,
       },
       experimentalPostfixCompletions = true,
