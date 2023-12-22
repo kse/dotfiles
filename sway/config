@@ -50,9 +50,13 @@ output "Dell Inc. DELL P2415Q D8VXF79P0KAL" {
   #mode 1920x1080@60Hz
   #mode 2560x1440@59.951Hz
 
-  scale 1.5
-  mode 3840x2160@59.997Hz
-  #mode 3840x2160@29.981Hz
+  # 1440 aka WQHD
+  #scale 1.5
+
+  # Custom
+  scale 1.333333333333333333333
+
+  mode 3840x2160@59.996Hz
 }
 
 output "Dell Inc. DELL P2415Q D8VXF03507TB" {
@@ -60,9 +64,14 @@ output "Dell Inc. DELL P2415Q D8VXF03507TB" {
   #pos 5760,0
   #mode 2560x1440@59.951Hz
 
+  # 1440p aka WQHD
+  #scale 1.5
+  #pos 4480,0
 
-  scale 1.5
-  pos 4480,0
+  # Custom
+  scale 1.333333333333333333333
+  pos 4800,0
+
   mode 3840x2160@59.997Hz
   #mode 3840x2160@29.981Hz
 }

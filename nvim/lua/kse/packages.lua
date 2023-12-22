@@ -29,6 +29,87 @@ return {
   -- Go
   { "rcarriga/nvim-dap-ui",      dependencies = { "mfussenegger/nvim-dap" } },
 
+  { "rafaelsq/nvim-goc.lua" },
+
+  {
+    "nvim-neotest/neotest",
+    dependencies = {
+      "nvim-neotest/neotest-go"
+    },
+    config = function()
+      -- get neotest namespace (api call creates or returns namespace)
+      local neotest_ns = vim.api.nvim_create_namespace("neotest")
+      vim.diagnostic.config({
+        virtual_text = {
+          format = function(diagnostic)
+            local message =
+                diagnostic.message:gsub("\n", " "):gsub("\t", " "):gsub("%s+", " "):gsub("^%s+", "")
+            return message
+          end,
+        },
+      }, neotest_ns)
+    end,
+    keys = {
+      {
+        "<leader>tf",
+        function()
+          require("neotest").run.run()
+        end,
+        desc = "Run the nearest test"
+      },
+      {
+        "<leader>tt",
+        function()
+          require("neotest").run.run_last()
+        end,
+        desc = "Run latest test"
+      },
+      {
+        "<leader>tl",
+        function()
+          require("neotest").run.run(vim.fn.expand("%"))
+        end,
+        desc = "Run tests the current file"
+      },
+      --{
+      --  "<leader>;d",
+      --  function()
+      --    require("neotest").run.run({ strategy = "dap" })
+      --  end,
+      --  desc = "Debug the nearest test (requires nvim-dap and adapter support)"
+      --},
+      --{
+      --  "<leader>tS",
+      --  function()
+      --    require("neotest").run.stop()
+      --  end,
+      --  desc = "Stop the nearest test"
+      --},
+      {
+        "<leader>ts",
+        function()
+          require("neotest").summary.toggle()
+        end,
+        desc = "Summary of tests"
+      },
+      --{
+      --  "<leader>tw",
+      --  function()
+      --    require("neotest").watch()
+      --  end,
+      --  desc = "Watch tests"
+      --},
+      --{
+      --  "<leader>to",
+      --  function()
+      --    require("neotest").output_panel().toggle()
+      --  end,
+      --  desc = "Output panel"
+      --},
+    },
+  },
+
+
   {
     "ray-x/go.nvim",
     dependencies = { -- optional packages
@@ -52,6 +133,9 @@ return {
 
   'folke/todo-comments.nvim',
   'folke/lazy.nvim',
+
+
+  'jpalardy/vim-slime',
 
   {
     'nvim-telescope/telescope.nvim',

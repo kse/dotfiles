@@ -147,3 +147,16 @@ require('lspconfig').lua_ls.setup {
 }
 
 require('lspconfig').jsonls.setup({})
+require('lspconfig').bufls.setup({})
+require('lspconfig').bashls.setup({})
+
+
+require('lspconfig').yamlls.setup {
+  settings = {
+    yaml = {
+      schemas = {
+        ["https://json.schemastore.org/github-workflow.json"] = "/.github/workflows/*",
+      },
+    },
+  }
+}

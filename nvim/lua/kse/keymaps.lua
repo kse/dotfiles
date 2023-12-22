@@ -6,14 +6,14 @@ vg.maplocalleader = " "
 
 return legendary.keymaps({
   -- Telescope
-  { '<leader>ff', ':Telescope find_files<CR>', description = 'Find files' },
+  { '<leader>ff',     ':Telescope find_files<CR>', description = 'Find files' },
 
   -- Editing words
-  { "<LocalLeader>,", "<cmd>norm A,<CR>", hide = true, description = "Append comma" },
-  { "<LocalLeader>;", "<cmd>norm A;<CR>", hide = true, description = "Append semicolon" },
+  { "<LocalLeader>,", "<cmd>norm A,<CR>",          hide = true,               description = "Append comma" },
+  { "<LocalLeader>;", "<cmd>norm A;<CR>",          hide = true,               description = "Append semicolon" },
 
   -- Clear search
-  { "<Leader>/", "<cmd>nohlsearch<CR>" },
+  { "<Leader>/",      "<cmd>nohlsearch<CR>" },
 
 
   -- Trouble
@@ -78,7 +78,20 @@ return legendary.keymaps({
 
   {
     '<LocalLeader>c',
-    '<Plug>(go-coverage-toggle)',
+    function()
+      vim.cmd(':GoCoverage -p')
+    end,
+    hide = true,
+    opts = { silent = true },
+    filters = {
+      ft = 'go'
+    }
+  },
+  {
+    '<LocalLeader>C',
+    function()
+      vim.cmd(':GoCoverage -R')
+    end,
     hide = true,
     filters = {
       ft = 'go'
@@ -86,14 +99,14 @@ return legendary.keymaps({
   },
 
   -- Go Callers
-  {
-    '<LocalLeader>C',
-    '<Plug>(go-callers)',
-    hide = true,
-    filters = {
-      ft = 'go'
-    }
-  },
+  --{ -- TODO: Use gr for referrers
+  --  '<LocalLeader>C',
+  --  '<Plug>(go-callers)',
+  --  hide = true,
+  --  filters = {
+  --    ft = 'go'
+  --  }
+  --},
 
   -- Edit alternate file
   {
@@ -118,52 +131,54 @@ return legendary.keymaps({
       ft = 'go'
     }
   },
-  {
-    '<LocalLeader>i',
-    '<Plug>(go-info)',
-    hide = true,
-    filters = {
-      ft = 'go'
-    }
-  },
-  {
-    '<LocalLeader>I',
-    '<Plug>(go-implements)',
-    hide = true,
-    filters = {
-      ft = 'go'
-    }
-  },
+  --{
+  --  '<LocalLeader>i',
+  --  '<Plug>(go-info)',
+  --  hide = true,
+  --  filters = {
+  --    ft = 'go'
+  --  }
+  --},
+  --{ -- TODO: Forward to trouble instead
+  --  '<LocalLeader>I',
+  --  '<Plug>(go-implements)',
+  --  hide = true,
+  --  filters = {
+  --    ft = 'go'
+  --  }
+  --},
   {
     '<C-e>',
     function()
       vim.cmd(':GoIfErr')
     end,
-    mode = {'i'},
+    mode = { 'i' },
     hide = true,
     filters = {
       ft = 'go'
     }
   },
-  {
-    '<LocalLeader>d',
-    '<Plug>(go-def)',
-    hide = true,
-    filters = {
-      ft = 'go'
-    }
-  },
-  {
-    '<LocalLeader>D',
-    '<Plug>(go-def-type)',
-    hide = true,
-    filters = {
-      ft = 'go'
-    }
-  },
+  --{ -- TODO: Probably just use gd
+  --  '<LocalLeader>d',
+  --  '<Plug>(go-def)',
+  --  hide = true,
+  --  filters = {
+  --    ft = 'go'
+  --  }
+  --},
+  --{ -- TODO: Can we replace this?
+  --  '<LocalLeader>D',
+  --  '<Plug>(go-def-type)',
+  --  hide = true,
+  --  filters = {
+  --    ft = 'go'
+  --  }
+  --},
   {
     '<LocalLeader>tf',
-    '<Plug>(go-test-func)',
+    function()
+      vim.cmd(':GoTestFunc')
+    end,
     hide = true,
     filters = {
       ft = 'go'
@@ -186,7 +201,7 @@ return legendary.keymaps({
 
 -- return legendary.keymaps({
 --   { "<C-y>", "<cmd>%y+<CR>", hide = true, description = "Copy buffer" },
--- 
+--
 --   {
 --     "<C-s>",
 --     "<cmd>silent! write<CR>",
@@ -194,11 +209,11 @@ return legendary.keymaps({
 --     description = "Save buffer",
 --     mode = { "n", "i" },
 --   },
--- 
+--
 --   -- Editing words
 --   { "<LocalLeader>,", "<cmd>norm A,<CR>", hide = true, description = "Append comma" },
 --   { "<LocalLeader>;", "<cmd>norm A;<CR>", hide = true, description = "Append semicolon" },
--- 
+--
 --   {
 --     itemgroup = "Wrap text",
 --     icon = "",
@@ -226,7 +241,7 @@ return legendary.keymaps({
 --       },
 --     },
 --   },
--- 
+--
 --   {
 --     itemgroup = "Find and Replace",
 --     icon = "",
@@ -247,13 +262,13 @@ return legendary.keymaps({
 --       -- },
 --     },
 --   },
--- 
+--
 --   -- Working with lines
 --   { "B", "^", hide = true, description = "Beginning of a line", mode = { "n", "v" } },
 --   { "E", "$", hide = true, description = "End of a line", mode = { "n", "v" } },
 --   { "<CR>", "o<Esc>", hide = true, description = "Insert blank line below" },
 --   { "<S-CR>", "O<Esc>", hide = true, description = "Insert blank line above" },
--- 
+--
 --   -- Moving lines
 --   {
 --     "<A-k>",
@@ -275,24 +290,24 @@ return legendary.keymaps({
 --     description = "Move selection down",
 --     opts = { silent = true },
 --   },
--- 
+--
 --   -- Splits
 --   { "<LocalLeader>sv", "<C-w>v", description = "Split: Vertical" },
 --   { "<LocalLeader>sh", "<C-w>h", description = "Split: Horizontal" },
 --   { "<LocalLeader>sc", "<C-w>q", description = "Split: Close" },
 --   { "<LocalLeader>so", "<C-w>o", description = "Split: Close all but current" },
--- 
+--
 --   -- Misc
 --   { "<Esc>", "<cmd>:noh<CR>", description = "Clear searches" },
 --   { "<S-w>", "<cmd>set winbar=<CR>", description = "Hide WinBar" },
 --   { "<LocalLeader>U", "gUiw`", description = "Capitalize word" },
 --   { ">", ">gv", hide = true, description = "Indent", mode = { "v" } },
 --   { "<", "<gv", hide = true, description = "Outdent", mode = { "v" } },
--- 
+--
 --   -- Multiple Cursors
 --   -- http://www.kevinli.co/posts/2017-01-19-multiple-cursors-in-500-bytes-of-vimscript/
 --   -- https://github.com/akinsho/dotfiles/blob/45c4c17084d0aa572e52cc177ac5b9d6db1585ae/.config/nvim/plugin/mappings.lua#L298
--- 
+--
 --   -- 1. Position the cursor anywhere in the word you wish to change;
 --   -- 2. Or, visually make a selection;
 --   -- 3. Hit cn, type the new word, then go back to Normal mode;
@@ -318,7 +333,7 @@ return legendary.keymaps({
 --         },
 --         description = "Inititiate (in backwards direction)",
 --       },
--- 
+--
 --       -- 1. Position the cursor over a word; alternatively, make a selection.
 --       -- 2. Hit cq to start recording the macro.
 --       -- 3. Once you are done with the macro, go back to normal mode.
