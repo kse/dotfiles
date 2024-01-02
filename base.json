@@ -1,4 +1,7 @@
 {
+  "extends": [
+    "secrets"
+  ],
   "create": [
     {
       "name": "~/.config/bash",
@@ -97,8 +100,8 @@
       "dst": "~/.config/git/config"
     },
     {
-      "src": "git/lunar.conf",
-      "dst": "~/.config/git/lunar.conf"
+      "src": "git/cardtokens.conf",
+      "dst": "~/.config/git/cardtokens.conf"
     }
   ]
 }
