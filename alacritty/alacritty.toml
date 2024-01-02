@@ -1,0 +1,7 @@
+[env]
+TERM = "xterm-256color"
+
+[[keyboard.bindings]]
+action = "SpawnNewInstance"
+key = "T"
+mods = "Control|Shift"
