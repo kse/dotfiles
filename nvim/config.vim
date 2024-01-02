@@ -15,77 +15,77 @@ endif
 
 set nocompatible
 filetype off
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
+"set rtp+=~/.vim/bundle/Vundle.vim
+"call vundle#begin()
 
-Plugin 'VundleVim/Vundle.vim'
-
-Plugin 'neovim/nvim-lspconfig'
-Plugin 'hrsh7th/cmp-nvim-lsp'
-Plugin 'hrsh7th/cmp-buffer'
-Plugin 'hrsh7th/cmp-path'
-Plugin 'hrsh7th/cmp-cmdline'
-Plugin 'hrsh7th/nvim-cmp'
-
-Plugin 'simrat39/rust-tools.nvim'
-
-" Consider https://github.com/petertriho/cmp-git ?
-
-Plugin 'hrsh7th/cmp-vsnip'
-Plugin 'hrsh7th/vim-vsnip'
-
-"Plugin 'dense-analysis/ale'
-
-"Plugin 'peterrincker/vim-argumentative'
-
-Plugin 'ruanyl/vim-gh-line'
-
-Plugin 'ervandew/supertab'
-"Plugin 'ctrlpvim/ctrlp.vim'
-Plugin 'scrooloose/nerdtree'
-Plugin 'airblade/vim-gitgutter'
-Plugin 'majutsushi/tagbar'
-
-Plugin 'rust-lang/rust.vim'
-"Plugin 'fatih/vim-go'
-
-Plugin 'mbbill/undotree'
-
-Plugin 'savq/melange'
-
-" TODO: Setup and make work
-"Plugin 'Chiel92/vim-autoformat'
-
-
-"Plugin 'mechatroner/rainbow_csv'
-Plugin 'jpalardy/vim-slime'
-
-"Plugin 'nvim-treesitter/nvim-treesitter'
-
-"Plugin 'hashivim/vim-terraform'
-
-"Plugin 'ekalinin/Dockerfile.vim'
-
-"Plugin 'itchyny/lightline.vim'
-" Supports for ale in lightline
-"Plugin 'maximbaz/lightline-ale'
-
-Plugin 'evanleck/vim-svelte'
-
-Plugin 'eandrju/cellular-automaton.nvim'
-
-" Oh Tim..
-"Plugin 'tpope/vim-surround'
-"Plugin 'tpope/vim-fugitive'
-"Plugin 'tpope/vim-commentary'
-"Plugin 'tpope/vim-repeat'
-"Plugin 'tpope/vim-unimpaired'
-"Plugin 'tpope/vim-abolish'
-Plugin 'flowtype/vim-flow', { 'do': 'npm install -g flow-bin' }
-
-"Plugin 'folke/todo-comments.nvim'
-"Plugin 'nvim-lua/plenary.nvim'
-call vundle#end()
+"Plugin 'VundleVim/Vundle.vim'
+"
+"Plugin 'neovim/nvim-lspconfig'
+"Plugin 'hrsh7th/cmp-nvim-lsp'
+"Plugin 'hrsh7th/cmp-buffer'
+"Plugin 'hrsh7th/cmp-path'
+"Plugin 'hrsh7th/cmp-cmdline'
+"Plugin 'hrsh7th/nvim-cmp'
+"
+"Plugin 'simrat39/rust-tools.nvim'
+"
+"" Consider https://github.com/petertriho/cmp-git ?
+"
+"Plugin 'hrsh7th/cmp-vsnip'
+"Plugin 'hrsh7th/vim-vsnip'
+"
+""Plugin 'dense-analysis/ale'
+"
+""Plugin 'peterrincker/vim-argumentative'
+"
+"Plugin 'ruanyl/vim-gh-line'
+"
+"Plugin 'ervandew/supertab'
+""Plugin 'ctrlpvim/ctrlp.vim'
+"Plugin 'scrooloose/nerdtree'
+"Plugin 'airblade/vim-gitgutter'
+"Plugin 'majutsushi/tagbar'
+"
+"Plugin 'rust-lang/rust.vim'
+""Plugin 'fatih/vim-go'
+"
+"Plugin 'mbbill/undotree'
+"
+"Plugin 'savq/melange'
+"
+"" TODO: Setup and make work
+""Plugin 'Chiel92/vim-autoformat'
+"
+"
+""Plugin 'mechatroner/rainbow_csv'
+"Plugin 'jpalardy/vim-slime'
+"
+""Plugin 'nvim-treesitter/nvim-treesitter'
+"
+""Plugin 'hashivim/vim-terraform'
+"
+""Plugin 'ekalinin/Dockerfile.vim'
+"
+""Plugin 'itchyny/lightline.vim'
+"" Supports for ale in lightline
+""Plugin 'maximbaz/lightline-ale'
+"
+"Plugin 'evanleck/vim-svelte'
+"
+"Plugin 'eandrju/cellular-automaton.nvim'
+"
+"" Oh Tim..
+""Plugin 'tpope/vim-surround'
+""Plugin 'tpope/vim-fugitive'
+""Plugin 'tpope/vim-commentary'
+""Plugin 'tpope/vim-repeat'
+""Plugin 'tpope/vim-unimpaired'
+""Plugin 'tpope/vim-abolish'
+"Plugin 'flowtype/vim-flow', { 'do': 'npm install -g flow-bin' }
+"
+""Plugin 'folke/todo-comments.nvim'
+""Plugin 'nvim-lua/plenary.nvim'
+"call vundle#end()
 
 filetype plugin indent on
 
