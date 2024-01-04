@@ -1,94 +1,61 @@
-/* Mocha Maroon */
-@define-color accent #cad3f5;
-@define-color txt #cad3f5;
-@define-color bg #24273a;
-@define-color bg2 #494d64;
+#window {
+    background-color: transparent;
+    border-radius: 15px;
+    font-family: sans-serif;
+    animation: fadeIn;
+    animation-duration: 0.2s;
+}
 
- * {
-    font-family: 'JetBrains Mono Nerd Font', monospace;
-    font-size: 14px;
- }
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
 
- /* Window */
- window {
-    margin: 0px;
+#outer-box {
+    margin: 15px;
+    border-radius: 15px;
+    background-color: #3b4252;
+    box-shadow: 0px 0px 5px 0 #0F0F0F;
+}
+
+#inner-box {
+    color: #d8dee9;
     padding: 10px;
-    border: 3px solid @accent;
-    border-radius: 7px;
-    background-color: @bg;
-    animation: slideIn 0.1s ease-in-out both;
- }
+    padding-top: 5px;
+}
 
- /* Slide In */
- @keyframes slideIn {
-    0% {
-       opacity: 0;
-    }
+#input {
+    color: #e5e9f0;
+    border: 2px solid #5e81ac;
+    background-color: #4c566a;
+    padding: 6px;
+    margin: 15px;
+    margin-bottom: 0px;
+    font-size: 16px;
+    border-radius: 5px;
+}
 
-    100% {
-       opacity: 1;
-    }
- }
+#entry {
+    border-radius: 5px;
+    padding: 7px;
+    margin: 0px 5px 0px 5px;
+}
 
- /* Inner Box */
- #inner-box {
-    margin: 5px;
-    padding: 10px;
-    border: none;
-    background-color: @bg;
-    animation: fadeIn 0.2s ease-in-out both;
- }
 
- /* Fade In */
- @keyframes fadeIn {
-    0% {
-       opacity: 0;
-    }
+#entry:selected {
+    background-color: #5e81ac;
+}
 
-    100% {
-       opacity: 1;
-    }
- }
+#text:selected {
+    color: #d8dee9;
+}
 
- /* Outer Box */
- #outer-box {
-    margin: 5px;
-    padding: 10px;
-    border: none;
-    background-color: @bg;
- }
+#text {
+    font-size: 16px;
+    padding: 7px;
+    color: #d8dee9;
+}
 
- /* Scroll */
- #scroll {
-    margin: 0px;
-    padding: 10px;
-    border: none;
- }
-
- /* Input */
- #input {
-    margin: 5px;
-    padding: 10px;
-    border: none;
-    color: @accent;
-    background-color: @bg2;
-    animation: fadeIn 0.2s ease-in-out both;
- }
-
- /* Text */
- #text {
-    margin: 5px;
-    padding: 10px;
-    border: none;
-    color: @txt;
-    animation: fadeIn 0.2s ease-in-out both;
- }
-
- /* Selected Entry */
- #entry:selected {
-   background-color: @accent;
- }
-
- #entry:selected #text {
-    color: @bg2;
- }
+#img {
+    padding: 4px;
+}

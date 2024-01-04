@@ -1,7 +1,8 @@
-width=750
-height=400
+width=50%
+height=40%
 always_parse_args=true
 show_all=false
 print_command=true
 insensitive=true
 prompt=What do you want to run?
+allow_images=true

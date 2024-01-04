@@ -82,7 +82,7 @@ function _update_ps1() {
 	# The test overwrites $?, save it first.
 	RET=$?
 	if [[ -e ${POWERLINE_PATH} ]]; then
-		PS1="$(${POWERLINE_PATH} -error $RET -newline -colorize-hostname -max-width 100 -modules 'venv,user,host,ssh,cwd,perms,git,hg,jobs,exit,root')"
+		PS1="$(${POWERLINE_PATH} -error $RET -newline -max-width 100 -modules 'venv,user,ssh,cwd,perms,git,jobs,exit,root' -modules-right 'time')"
 	fi
 }
 
