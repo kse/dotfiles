@@ -24,10 +24,6 @@
       "mode": "750"
     },
     {
-      "name": "~/.config/environment.d",
-      "mode": "750"
-    },
-    {
       "name": "~/.config/xdg-desktop-portal-wlr",
       "mode": "750"
     }
@@ -86,12 +82,16 @@
       "dst": "~/.config/git/ignore"
     },
     {
-      "src": "environment.d/path.conf",
-      "dst": "~/.config/environment.d/path.conf"
+      "src": "environment.d",
+      "dst": "~/.config/environment.d"
     },
     {
       "src": "xdg-desktop-portal-wlr/config",
       "dst": "~/.config/xdg-desktop-portal-wlr/config"
+    },
+    {
+      "src": ".profile",
+      "dst": "~/.profile"
     }
   ],
   "template": [
