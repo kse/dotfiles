@@ -6,9 +6,6 @@
 [commit]
 	gpgsign = true
 
-[includeIf "gitdir:**/Lunar/**/.git"]
-  path = ~/.config/git/lunar.conf
-
 [color]
 	status = auto
 	branch = auto
@@ -24,7 +21,7 @@
 	st = status -sb
 	ci = commit
 	b  = branch
-	lg = log --oneline --graph --decorate
+	lg = log --oneline --graph --decorate -n 30
 
 [include]
 	path = .github
@@ -39,7 +36,7 @@
 	excludesfile = ~/.config/git/ignore
 
 [pull]
-	rebase = false
+	rebase = true
 [init]
 	defaultBranch = main
 [merge]

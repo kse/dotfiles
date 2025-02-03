@@ -18,3 +18,4 @@ require("lazy").setup('kse.packages')
 
 --require('kse.completion')
 require('kse.keymaps')
+require('kse.ft')

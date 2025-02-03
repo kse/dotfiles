@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Linear
+Comment=Linear - Issue tracking you'll enjoy
+Exec=linear-desktop --enable-features=UseOzonePlatform --ozone-platform=wayland
+Icon=/usr/share/pixmaps/linear-desktop.png
+Terminal=false
+Categories=Linear;Productivity;Planning; 
+MimeType=x-scheme-handler/linear;

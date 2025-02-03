@@ -209,7 +209,8 @@ vnoremap > >gv
 
 set termguicolors
 let g:gruvbox_material_background = "hard"
-colorscheme gruvbox-material
+"colorscheme gruvbox-material
+colorscheme kanagawa-dragon
 
 let Tlist_Ctags_Cmd = "/usr/bin/ctags"
 let Tlist_WinWidth = 30
@@ -385,10 +386,10 @@ let g:ale_set_loclist = 1
 
 highlight ExtraWhitespace ctermbg=red guibg=red
 match ExtraWhitespace /\s\+$/
-autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
-autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
-autocmd InsertLeave * match ExtraWhitespace /\s\+$/
-autocmd BufWinLeave * call clearmatches()
+"autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
+"autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
+"autocmd InsertLeave * match ExtraWhitespace /\s\+$/
+"autocmd BufWinLeave * call clearmatches()
 
 " EasyAlign
 " Start interactive EasyAlign in visual mode (e.g. vipga)

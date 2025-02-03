@@ -1,0 +1,3 @@
+[submodule "alacritty/themes"]
+	path = alacritty/themes
+	url = ssh://git@github.com/alacritty/alacritty-theme

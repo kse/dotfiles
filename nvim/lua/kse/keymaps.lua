@@ -5,12 +5,9 @@ local vg = vim.g
 vg.maplocalleader = " "
 
 return legendary.keymaps({
-  -- Telescope
-  { '<leader>ff',     ':Telescope find_files<CR>', description = 'Find files' },
-
   -- Editing words
-  { "<LocalLeader>,", "<cmd>norm A,<CR>",          hide = true,               description = "Append comma" },
-  { "<LocalLeader>;", "<cmd>norm A;<CR>",          hide = true,               description = "Append semicolon" },
+  { "<LocalLeader>,", "<cmd>norm A,<CR>",   hide = true, description = "Append comma" },
+  { "<LocalLeader>;", "<cmd>norm A;<CR>",   hide = true, description = "Append semicolon" },
 
   -- Clear search
   { "<Leader>/",      "<cmd>nohlsearch<CR>" },
@@ -19,37 +16,31 @@ return legendary.keymaps({
   -- Trouble
   {
     "<leader>xx",
-    function() require("trouble").toggle() end,
+    function() require("trouble").toggle({ new = false, mode = "diagnostics" }) end,
     hide = true,
     description = "Open Trouble window"
   },
   {
-    "<leader>xw",
-    function() require("trouble").toggle("workspace_diagnostics") end,
-    hide = true,
-    description = "Open Trouble workspace_diagnostics window"
-  },
-  {
-    "<leader>xd",
-    function() require("trouble").toggle("document_diagnostics") end,
+    "<leader>xX",
+    "<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
     hide = true,
     description = "Open Trouble document_diagnostics window"
   },
   {
     "<leader>xq",
-    function() require("trouble").toggle("quickfix") end,
+    "<cmd>Trouble qflist toggle<cr>",
     hide = true,
     description = "Populate quickfix window with trouble diagnostics"
   },
   {
     "<leader>xl",
-    function() require("trouble").toggle("loclist") end,
+    "<cmd>Trouble loclist toggle<cr>",
     hide = true,
     description = "Populate loclist window with trouble diagnostics"
   },
   {
     "gR",
-    function() require("trouble").toggle("lsp_references") end,
+    "<cmd>Trouble lsp_references toggle<cr>",
     hide = true,
     description = "Open Trouble with LSP references for the word under the cursor"
   },
@@ -76,21 +67,31 @@ return legendary.keymaps({
     opts = { silent = true },
   },
 
+  --{response
+  --  '<LocalLeader>c',
+  --  function()
+  --    vim.cmd(':GoCoverage -p')
+  --  end,
+  --  hide = true,
+  --  opts = { silent = true },
+  --  filters = {
+  --    ft = 'go'
+  --  }
+  --},
+  --{
+  --  '<LocalLeader>C',
+  --  function()
+  --    vim.cmd(':GoCoverage -R')
+  --  end,
+  --  hide = true,
+  --  filters = {
+  --    ft = 'go'
+  --  }
+  --},
   {
-    '<LocalLeader>c',
+    '<LocalLeader>F',
     function()
-      vim.cmd(':GoCoverage -p')
-    end,
-    hide = true,
-    opts = { silent = true },
-    filters = {
-      ft = 'go'
-    }
-  },
-  {
-    '<LocalLeader>C',
-    function()
-      vim.cmd(':GoCoverage -R')
+      vim.cmd(':GoFillStruct')
     end,
     hide = true,
     filters = {
@@ -197,6 +198,33 @@ return legendary.keymaps({
       ft = 'go'
     }
   },
+
+  {
+    "<CR>",
+    function()
+      -- Save the current cursor position
+      local saved_view = vim.fn.winsaveview()
+
+      -- Perform the copy action for visual selection to clipboard
+      vim.cmd('normal! "+y')
+
+      vim.fn.winrestview(saved_view)
+      vim.notify("Copied to clipboard", vim.log.levels.INFO)
+    end,
+    mode = "v",
+    hide = false,
+    description = "Copy visual selection to clipboard",
+    opts = { silent = false },
+  },
+
+  {
+    '<Leader>vd',
+    '<Cmd>vsplit | lua vim.lsp.buf.definition()<CR>',
+    mode        = 'n',
+    hide        = true,
+    description = "Open definition in vsplit",
+    opts        = { silent = true, noremap = true },
+  }
 })
 
 -- return legendary.keymaps({

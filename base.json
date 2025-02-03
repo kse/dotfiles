@@ -16,15 +16,15 @@
       "mode": "750"
     },
     {
-      "name": "~/.config/alacritty",
-      "mode": "750"
-    },
-    {
       "name": "~/.config/git",
       "mode": "750"
     },
     {
       "name": "~/.config/xdg-desktop-portal-wlr",
+      "mode": "750"
+    },
+    {
+      "name": "~/.config/swaync",
       "mode": "750"
     }
   ],
@@ -74,8 +74,8 @@
       "dst": "~/.config/mako/config"
     },
     {
-      "src": "alacritty/alacritty.toml",
-      "dst": "~/.config/alacritty/alacritty.toml"
+      "src": "alacritty",
+      "dst": "~/.config/alacritty"
     },
     {
       "src": "git/ignore",
@@ -92,6 +92,10 @@
     {
       "src": ".profile",
       "dst": "~/.profile"
+    },
+    {
+      "src": "swaync_config.json",
+      "dst": "~/.config/swaync/config.json"
     }
   ],
   "template": [

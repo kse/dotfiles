@@ -4,6 +4,8 @@ vim.g.maplocalleader = ' '
 require('kse')
 require('config')
 
+vim.o.splitright = true
+
 -- Source legacy VIM config
 vim.cmd('source ~/.config/nvim/config.vim')
 

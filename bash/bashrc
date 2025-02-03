@@ -29,6 +29,70 @@ alias iv='vim -R -c ":map Q :q!<CR>" -'
 
 alias d='dotref -d ~/.dotref'
 
+                               #################
+                               ### TERRAFORM ###
+                               #################
+
+alias tf=terraform
+alias tfi='terraform import'
+alias tfvi='terraform import -var-file vars.tfvars'
+alias tfa='terraform apply'
+
+function tfva() {
+  ENV=$(tfenv)
+
+  if [[ $ENV = 'INVALID' ]]; then
+    echo "Invalid TF workspace"
+    return
+  fi
+
+  CMD="terraform apply"
+
+  for file in $ENV**.tfvars; do
+    if ! [ -f ${file} ]; then
+      break;
+    fi
+    CMD="${CMD} -var-file ${file}"
+  done
+
+  echo $CMD
+
+  $CMD
+}
+
+function tfv() {
+  if [ $# -eq 0 ]; then
+    echo "Missing environment argument"
+    return
+  fi
+
+  ENV=$(tfenv)
+
+  if [[ $ENV = 'INVALID' ]]; then
+    echo "Invalid TF workspace"
+    return
+  fi
+
+
+  CMD="terraform ${@}"
+
+  for file in $ENV**.tfvars; do
+    if ! [ -f ${file} ]; then
+      break;
+    fi
+    CMD="${CMD} -var-file ${file}"
+  done
+
+  echo $CMD
+
+  $CMD
+}
+
+alias tfw='terraform workspace'
+alias tfenv="tfw show | sed -E '{s/^(test|sandbox|prod)([[:digit:]]+)?$/\1/; T error; t done;}; :done q 0; :error c \INVALID'"
+alias tfwl='terraform workspace list'
+alias tfwl='terraform workspace new'
+
 # Ignore commands that start with space:ignore duplicate commands
 export HISTCONTROL=ignorespace:ignoredups
 
@@ -82,7 +146,14 @@ function _update_ps1() {
 	# The test overwrites $?, save it first.
 	RET=$?
 	if [[ -e ${POWERLINE_PATH} ]]; then
-		PS1="$(${POWERLINE_PATH} -error $RET -newline -max-width 100 -modules 'venv,user,ssh,cwd,perms,git,jobs,exit,root' -modules-right 'time')"
+		PS1="$(${POWERLINE_PATH} \
+      -error $RET \
+      -newline \
+      -max-width 100 \
+      -modules 'venv,user,ssh,cwd,perms,git,jobs,exit,root' \
+      -modules-right 'time' \
+      -numeric-exit-codes \
+      -theme solarized-dark16)"
 	fi
 }
 
@@ -113,3 +184,6 @@ p () {
 ################################################################################
 
 test -r ~/.dir_colors && eval $(dircolors ~/.dir_colors)
+
+# Avoid starting a new shell with $?=1 if the above command fails.
+test true

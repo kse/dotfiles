@@ -199,6 +199,9 @@ default_border pixel 2
 #
 
     # Navigate between workspaces
+
+    bindsym $mod+p workspace back_and_forth
+
     bindsym $mod+Control+$left workspace prev_on_output
     bindsym $mod+Control+$right workspace next_on_output
 
@@ -214,6 +217,30 @@ default_border pixel 2
     bindsym $mod+9 workspace number 9
     bindsym $mod+0 workspace number 10
     # Move focused container to workspace
+
+
+    # Workspaces:
+    set $ws0 0
+    set $ws1 1
+    set $ws2 2
+    set $ws3 3
+    set $ws4 4
+    set $ws5 5
+    set $ws6 6
+    set $ws7 7
+    set $ws8 8
+    set $ws9 9
+
+    # Workrooms:
+    set $workroom 1
+    set $workspace 0
+    bindsym Alt+Shift+1 set $$workroom 1; workspace $$workroom$$workspace
+    bindsym Alt+Shift+2 set $$workroom 2; workspace $$workroom$$workspace
+    bindsym Alt+Shift+3 set $$workroom 3; workspace $$workroom$$workspace
+
+    bindsym $mod+Escape workspace $$workroom$ws0; set $$workspace $ws0
+
+
     bindsym $mod+Shift+1 move container to workspace number 1
     bindsym $mod+Shift+2 move container to workspace number 2
     bindsym $mod+Shift+3 move container to workspace number 3
@@ -331,3 +358,6 @@ bindsym Shift+Alt+d exec makoctl dismiss
 #
 
 exec nm-applet --indicator
+exec swaync
+bindsym $mod+Shift+n exec swaync-client -t -sw
+bindsym $mod+Shift+p exec ~/.local/bin/select_password

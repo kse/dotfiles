@@ -5,16 +5,16 @@ local goc = require 'nvim-goc'
 goc.setup({ verticalSplit = true }) -- default to horizontal
 
 
-vim.keymap.set('n', '<LocalLeader>gcf', goc.Coverage, { silent = true })      -- run for the whole File
-vim.keymap.set('n', '<LocalLeader>gct', goc.CoverageFunc, { silent = true })  -- run only for a specific Test unit
-vim.keymap.set('n', '<LocalLeader>gcc', goc.ClearCoverage, { silent = true }) -- clear coverage highlights
+vim.keymap.set('n', '<LocalLeader>c', goc.Coverage, { silent = true })      -- run for the whole File
+--vim.keymap.set('n', '<LocalLeader>t', goc.CoverageFunc, { silent = true })  -- run only for a specific Test unit
+vim.keymap.set('n', '<LocalLeader>C', goc.ClearCoverage, { silent = true }) -- clear coverage highlights
 
 -- If you need custom arguments, you can supply an array as in the example below.
 -- vim.keymap.set('n', '<LocalLeader>gcf', function() goc.Coverage({ "-race", "-count=1" }) end, {silent=true})
 -- vim.keymap.set('n', '<LocalLeader>gct', function() goc.CoverageFunc({ "-race", "-count=1" }) end, {silent=true})
 
-vim.keymap.set('n', ']a', goc.Alternate, { silent = true })
-vim.keymap.set('n', '[a', goc.AlternateSplit, { silent = true }) -- set verticalSplit=true for vertical
+-- vim.keymap.set('n', ']a', goc.Alternate, { silent = true })
+-- vim.keymap.set('n', '[a', goc.AlternateSplit, { silent = true }) -- set verticalSplit=true for vertical
 
 cf = function(testCurrentFunction)
   local cb = function(path)

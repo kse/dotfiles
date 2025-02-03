@@ -5,7 +5,7 @@
 
     "modules-left": [ "sway/workspaces", "sway/mode" ],
     "modules-center": [ "sway/window" ],
-    "modules-right": [ "memory", "cpu", "tray", "pulseaudio", "battery", "clock" ],
+    "modules-right": [ "idle_inhibitor", "tray", "pulseaudio", "battery", "clock" ],
 
     "sway/workspaces": {
         "disable-scroll": true,

@@ -1,17 +1,23 @@
 require('go').setup({
   disable_defaults = false, -- true|false when true set false to all boolean settings and replace all table
   -- settings with {}
-  go = 'go', -- go command, can be go[default] or go1.18beta1
-  goimport = 'gopls', -- goimport command, can be gopls[default] or goimport
-  fillstruct = 'gopls', -- default, can also use fillstruct
-  gofmt = 'gofumpt', --gofmt cmd,
-  max_line_len = 128, -- max line length in golines format, Target maximum line length for golines
-  tag_transform = false, -- can be transform option("snakecase", "camelcase", etc) check gomodifytags for details and more options
+  go = 'go',                -- go command, can be go[default] or go1.18beta1
+  goimports = 'gopls',      -- goimports command, can be gopls[default] or goimport
+  fillstruct = 'gopls',     -- default, can also use fillstruct
+  gofmt = 'gofumpt',        --gofmt cmd,
+
+  -- max_line_len = 128, -- max line length in golines format, Target maximum line length for golines
+  tag_transform = 'camelcase',    -- can be transform option("snakecase", "camelcase", etc) check gomodifytags for details and more options
   tag_options = 'json=omitempty', -- sets options sent to gomodifytags, i.e., json=omitempty
-  gotests_template = "", -- sets gotests -template parameter (check gotests for details)
-  gotests_template_dir = "", -- sets gotests -template_dir parameter (check gotests for details)
-  comment_placeholder = '', -- comment_placeholder your cool placeholder e.g. 󰟓       
+
+  gotests_template = "",          -- sets gotests -template parameter (check gotests for details)
+  gotests_template_dir = "",      -- sets gotests -template_dir parameter (check gotests for details)
+
+  -- comment_placeholder = '', -- comment_placeholder your cool placeholder e.g. 󰟓       
+  comment_placeholder = "   ",
+
   icons = { breakpoint = '🧘', currentpos = '🏃' }, -- setup to `false` to disable icons setup
+
   verbose = false, -- output loginf in messages
   lsp_cfg = false, -- true: use non-default gopls setup specified in go/lsp.lua
   -- false: do nothing
@@ -27,11 +33,11 @@ require('go').setup({
   --    vim.api.nvim_buf_set_keymap(bufnr, "n", "<space>F", "<cmd>lua vim.lsp.buf.formatting()<CR>", {noremap=true, silent=true})
   -- end
   -- to setup a table of codelens
-  diagnostic = {  -- set diagnostic to false to disable vim.diagnostic setup
-    hdlr = false, -- hook lsp diag handler and send diag to quickfix
+  diagnostic = { -- set diagnostic to false to disable vim.diagnostic setup
+    hdlr = true, -- hook lsp diag handler and send diag to quickfix
     underline = true,
     -- virtual text setup
-    virtual_text = { space = 0, prefix = '■' },
+    virtual_text = { space = 1, prefix = '■' },
     signs = true,
     update_in_insert = false,
   },

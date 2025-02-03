@@ -1,3 +1,5 @@
+require("neodev").setup({})
+
 local lsp_zero = require('lsp-zero')
 local cmp = require('cmp')
 local cmp_action = require('lsp-zero').cmp_action()
@@ -5,8 +7,49 @@ local cmp_action = require('lsp-zero').cmp_action()
 lsp_zero.on_attach(function(client, bufnr)
   -- see :help lsp-zero-keybindings
   -- to learn the available actions
-  lsp_zero.default_keymaps({ buffer = bufnr })
+  lsp_zero.default_keymaps({
+    buffer = bufnr,
+    exclude = { 'gr', 'gi' },
+  })
   lsp_zero.buffer_autoformat()
+
+  -- if client.supports_method("textDocument/formatting") then
+  --   vim.keymap.set("n", "<Leader>f", function()
+  --     vim.lsp.buf.format({ bufnr = vim.api.nvim_get_current_buf() })
+  --   end, { buffer = bufnr, desc = "[lsp] format" })
+  -- end
+
+  -- if client.supports_method("textDocument/rangeFormatting") then
+  --   vim.keymap.set("x", "<Leader>f", function()
+  --     vim.lsp.buf.format({ bufnr = vim.api.nvim_get_current_buf() })
+  --   end, { buffer = bufnr, desc = "[lsp] format" })
+  -- end
+
+  if client.supports_method("textDocument/typeDefinition") then
+    vim.keymap.set("n", "gt", function()
+      vim.lsp.buf.type_definition()
+    end, { buffer = bufnr, desc = "[lsp] type definition" })
+  end
+
+  local telescope = require('telescope.builtin')
+  if telescope then
+    vim.keymap.set("n", "gi", function()
+      telescope.lsp_implementations({
+        jump_type = 'never',
+        fname_width = 100,
+        show_line = false,
+      })
+    end
+    , {})
+
+    vim.keymap.set("n", "gr", function()
+      telescope.lsp_references({
+        jump_type = 'never',
+        fname_width = 100,
+        show_line = false,
+      })
+    end, {})
+  end
 end)
 
 --lsp_zero.format_on_save({
@@ -56,7 +99,8 @@ local confirm_or_begin_completion = function(fallback)
     cmp.confirm({
       -- BUG: I can't make this work properly. In certain cases it will replace
       -- the existing text.
-      behavior = cmp.ConfirmBehavior.Insert,
+      -- Turns out this is a gopls error
+      behavior = cmp.ConfirmBehavior.Replace,
       --behavior = cmp.ConfirmBehavior.Replace,
 
       select = false,
@@ -119,6 +163,12 @@ require('lspconfig').gopls.setup({
 })
 
 require('lspconfig').lua_ls.setup {
+  settings = {
+    Lua = {
+      -- Disable very noisy warning for missing fields.
+      diagnostics = { disable = { 'missing-fields' } },
+    }
+  },
   on_init = function(client)
     local path = client.workspace_folders[1].name
     if not vim.loop.fs_stat(path .. '/.luarc.json') and not vim.loop.fs_stat(path .. '/.luarc.jsonc') then
@@ -129,13 +179,17 @@ require('lspconfig').lua_ls.setup {
             -- (most likely LuaJIT in the case of Neovim)
             version = 'LuaJIT'
           },
-
+          diagnostics = {
+            globals = { "vim" },
+          },
+          hint = { enable = true },
           -- Make the server aware of Neovim runtime files
           workspace = {
             checkThirdParty = false,
-            library = {
-              vim.env.VIMRUNTIME
-            }
+            --library = {
+            --  vim.env.VIMRUNTIME
+            --},
+            library = vim.api.nvim_get_runtime_file("", true),
           }
         }
       })
@@ -149,6 +203,29 @@ require('lspconfig').lua_ls.setup {
 require('lspconfig').jsonls.setup({})
 require('lspconfig').bufls.setup({})
 require('lspconfig').bashls.setup({})
+require('lspconfig').terraformls.setup({
+  filetypes = { "terraform", "hcl", "terraform-vars" }
+})
+require('lspconfig').templ.setup({})
+require('lspconfig').htmx.setup({})
+require('lspconfig').html.setup({})
+require('lspconfig').tailwindcss.setup({})
+
+
+-- For JS config:
+-- https://code.visualstudio.com/docs/languages/jsconfig
+require('lspconfig').ts_ls.setup({})
+
+vim.api.nvim_create_autocmd({ "BufWritePre" }, {
+  pattern = { "*.tf", "*.tfvars" },
+  callback = function()
+    vim.lsp.buf.format()
+  end,
+})
+
+--require('lspconfig').terraform_lsp.setup({
+--  filetypes = { "terraform", "hcl", "terraform-vars" }
+--})
 
 
 require('lspconfig').yamlls.setup {

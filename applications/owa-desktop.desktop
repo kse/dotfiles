@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=Outlook Desktop
+Comment=A simple Outlook Web (Office 365) Desktop application, built using Electron.js
+GenericName=Outlook Desktop
+Exec=owa-desktop --enable-features=UseOzonePlatform --ozone-platform=wayland %U
+Icon=owa-desktop
+Type=Application
+StartupNotify=true
+Categories=GNOME;GTK;Utility;
+
