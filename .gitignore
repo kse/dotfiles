@@ -3,3 +3,4 @@ TODO
 nvim/lazy-lock.json
 applications/wine-*
 applications/mimeinfo.*
+secrets.json
