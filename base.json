@@ -1,7 +1,5 @@
 {
-  "extends": [
-    "secrets"
-  ],
+  "extends": [ "secrets" ],
   "create": [
     {
       "name": "~/.config/bash",
@@ -102,10 +100,6 @@
     {
       "src": "git/config",
       "dst": "~/.config/git/config"
-    },
-    {
-      "src": "git/cardtokens.conf",
-      "dst": "~/.config/git/cardtokens.conf"
     }
   ]
 }
