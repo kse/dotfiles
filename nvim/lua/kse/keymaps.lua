@@ -44,6 +44,12 @@ return legendary.keymaps({
     hide = true,
     description = "Open Trouble with LSP references for the word under the cursor"
   },
+  {
+    "<LocalLeader>e",
+    "<cmd>lua vim.diagnostic.open_float(nil, { focusable = false })<CR>",
+    hide = true,
+    opts = { silent = true }
+  },
 
   -- Moving lines
   {
@@ -224,7 +230,23 @@ return legendary.keymaps({
     hide        = true,
     description = "Open definition in vsplit",
     opts        = { silent = true, noremap = true },
-  }
+  },
+
+  {
+    '<Leader>z',
+    '<Cmd>ZenMode<CR>',
+    mode        = 'n',
+    hide        = true,
+    description = "Start Zen Mode",
+    opts        = { silent = true, noremap = true },
+  },
+  --{
+  --  '<Space>',
+  --  '<C-d>',
+  --  mode = 'n',
+  --  hide = true,
+  --  opts = { silent = true, noremap = true },
+  --},
 })
 
 -- return legendary.keymaps({

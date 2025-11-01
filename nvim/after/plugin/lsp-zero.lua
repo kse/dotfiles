@@ -1,5 +1,14 @@
 require("neodev").setup({})
 
+local ok, wf = pcall(require, "vim.lsp._watchfiles")
+if ok then
+  -- disable lsp watcher. Too slow on linux
+  wf._watchfunc = function()
+    return function() end
+  end
+end
+
+
 local lsp_zero = require('lsp-zero')
 local cmp = require('cmp')
 local cmp_action = require('lsp-zero').cmp_action()
@@ -9,9 +18,9 @@ lsp_zero.on_attach(function(client, bufnr)
   -- to learn the available actions
   lsp_zero.default_keymaps({
     buffer = bufnr,
-    exclude = { 'gr', 'gi' },
+    exclude = { 'gr', 'gi', 'gd', 'gt' },
   })
-  lsp_zero.buffer_autoformat()
+  -- lsp_zero.buffer_autoformat()
 
   -- if client.supports_method("textDocument/formatting") then
   --   vim.keymap.set("n", "<Leader>f", function()
@@ -25,31 +34,39 @@ lsp_zero.on_attach(function(client, bufnr)
   --   end, { buffer = bufnr, desc = "[lsp] format" })
   -- end
 
-  if client.supports_method("textDocument/typeDefinition") then
-    vim.keymap.set("n", "gt", function()
-      vim.lsp.buf.type_definition()
-    end, { buffer = bufnr, desc = "[lsp] type definition" })
-  end
+  -- if client.supports_method("textDocument/typeDefinition") then
+  --   vim.keymap.set("n", "gt", function()
+  --     vim.lsp.buf.type_definition()
+  --   end, { buffer = bufnr, desc = "[lsp] type definition" })
+  -- end
 
-  local telescope = require('telescope.builtin')
-  if telescope then
-    vim.keymap.set("n", "gi", function()
-      telescope.lsp_implementations({
-        jump_type = 'never',
-        fname_width = 100,
-        show_line = false,
-      })
-    end
-    , {})
+  -- local telescope = require('telescope.builtin')
+  -- if telescope then
+  --   vim.keymap.set("n", "gi", function()
+  --     telescope.lsp_implementations({
+  --       jump_type = 'never',
+  --       fname_width = 100,
+  --       show_line = false,
+  --     })
+  --   end
+  --   , {})
 
-    vim.keymap.set("n", "gr", function()
-      telescope.lsp_references({
-        jump_type = 'never',
-        fname_width = 100,
-        show_line = false,
-      })
-    end, {})
-  end
+  --   vim.keymap.set("n", "gr", function()
+  --     telescope.lsp_references({
+  --       jump_type = 'never',
+  --       fname_width = 100,
+  --       show_line = false,
+  --     })
+  --   end, {})
+
+  --   vim.keymap.set("n", "gd", function()
+  --     telescope.lsp_definitions({
+  --       -- jump_type = 'never',
+  --       fname_width = 100,
+  --       show_line = false,
+  --     })
+  --   end, {})
+  -- end
 end)
 
 --lsp_zero.format_on_save({
@@ -119,6 +136,7 @@ cmp.setup({
 
     -- Ctrl+Space to trigger completion menu
     ['<C-Space>'] = confirm_or_begin_completion,
+    ['<Right>'] = confirm_or_begin_completion,
 
     -- Navigate between snippet placeholder
     ['<C-f>'] = cmp_action.luasnip_jump_forward(),
@@ -129,11 +147,13 @@ cmp.setup({
     ['<C-d>'] = cmp.mapping.scroll_docs(4),
 
     ["<Tab>"] = cmp.mapping(next_completion, { "i", "s" }),
+    ["<Down>"] = cmp.mapping(next_completion, { "i", "s" }),
     ["<S-Tab>"] = cmp.mapping(previous_completion, { "i", "s" }),
+    ["<Up>"] = cmp.mapping(previous_completion, { "i", "s" }),
   })
 })
 
-require('lspconfig').gopls.setup({
+vim.lsp.config('gopls', {
   settings = {
     -- https://github.com/golang/vscode-go/blob/33339e687f2034f80ae3018a79db121c8e04feed/docs/settings.md
     gopls = {
@@ -162,59 +182,75 @@ require('lspconfig').gopls.setup({
   },
 })
 
-require('lspconfig').lua_ls.setup {
+vim.lsp.config('lua_ls', {
+  on_init = function(client)
+    if client.workspace_folders then
+      local path = client.workspace_folders[1].name
+      if
+          path ~= vim.fn.stdpath('config')
+          and (vim.uv.fs_stat(path .. '/.luarc.json') or vim.uv.fs_stat(path .. '/.luarc.jsonc'))
+      then
+        return
+      end
+    end
+
+    client.config.settings.Lua = vim.tbl_deep_extend('force', client.config.settings.Lua, {
+      runtime = {
+        -- Tell the language server which version of Lua you're using (most
+        -- likely LuaJIT in the case of Neovim)
+        version = 'LuaJIT',
+        -- Tell the language server how to find Lua modules same way as Neovim
+        -- (see `:h lua-module-load`)
+        path = {
+          'lua/?.lua',
+          'lua/?/init.lua',
+        },
+      },
+      -- Make the server aware of Neovim runtime files
+      workspace = {
+        checkThirdParty = false,
+        library = {
+          vim.env.VIMRUNTIME
+          -- Depending on the usage, you might want to add additional paths
+          -- here.
+          -- '${3rd}/luv/library'
+          -- '${3rd}/busted/library'
+        }
+        -- Or pull in all of 'runtimepath'.
+        -- NOTE: this is a lot slower and will cause issues when working on
+        -- your own configuration.
+        -- See https://github.com/neovim/nvim-lspconfig/issues/3189
+        -- library = {
+        --   vim.api.nvim_get_runtime_file('', true),
+        -- }
+      }
+    })
+  end,
   settings = {
     Lua = {
       -- Disable very noisy warning for missing fields.
       diagnostics = { disable = { 'missing-fields' } },
     }
   },
-  on_init = function(client)
-    local path = client.workspace_folders[1].name
-    if not vim.loop.fs_stat(path .. '/.luarc.json') and not vim.loop.fs_stat(path .. '/.luarc.jsonc') then
-      client.config.settings = vim.tbl_deep_extend('force', client.config.settings, {
-        Lua = {
-          runtime = {
-            -- Tell the language server which version of Lua you're using
-            -- (most likely LuaJIT in the case of Neovim)
-            version = 'LuaJIT'
-          },
-          diagnostics = {
-            globals = { "vim" },
-          },
-          hint = { enable = true },
-          -- Make the server aware of Neovim runtime files
-          workspace = {
-            checkThirdParty = false,
-            --library = {
-            --  vim.env.VIMRUNTIME
-            --},
-            library = vim.api.nvim_get_runtime_file("", true),
-          }
-        }
-      })
+})
 
-      client.notify("workspace/didChangeConfiguration", { settings = client.config.settings })
-    end
-    return true
-  end
-}
 
-require('lspconfig').jsonls.setup({})
-require('lspconfig').bufls.setup({})
-require('lspconfig').bashls.setup({})
-require('lspconfig').terraformls.setup({
+vim.lsp.config('jsonls', {})
+vim.lsp.config('bashls', {})
+vim.lsp.config('terraformls', {
   filetypes = { "terraform", "hcl", "terraform-vars" }
 })
-require('lspconfig').templ.setup({})
-require('lspconfig').htmx.setup({})
-require('lspconfig').html.setup({})
-require('lspconfig').tailwindcss.setup({})
+
+-- vim.lsp.config('templ', {})
+-- vim.lsp.config('htmx', {})
+
+vim.lsp.config('html', {})
+vim.lsp.config('tailwindcss', {})
 
 
 -- For JS config:
 -- https://code.visualstudio.com/docs/languages/jsconfig
-require('lspconfig').ts_ls.setup({})
+vim.lsp.config('ts_ls', {})
 
 vim.api.nvim_create_autocmd({ "BufWritePre" }, {
   pattern = { "*.tf", "*.tfvars" },
@@ -223,12 +259,12 @@ vim.api.nvim_create_autocmd({ "BufWritePre" }, {
   end,
 })
 
---require('lspconfig').terraform_lsp.setup({
+--vim.lsp.config('terraform_lsp', {
 --  filetypes = { "terraform", "hcl", "terraform-vars" }
 --})
 
 
-require('lspconfig').yamlls.setup {
+vim.lsp.config('yamlls', {
   settings = {
     yaml = {
       schemas = {
@@ -236,4 +272,151 @@ require('lspconfig').yamlls.setup {
       },
     },
   }
-}
+})
+
+--require('lspconfig').pyright.setup {
+--  settings = {
+--    pyright = {
+--      openFilesOnly = true
+--    },
+--    python = {
+--      path = os.getenv("PYENV_VIRTUAL_ENV"), -- to make pyright work
+--      analysis = {
+--        typeCheckingMode = "standard",
+--        autoImportCompletions = true,
+--        useLibraryCodeForTypes = true,
+--        diagnosticMode = "openFilesOnly",
+--        stubPath = "",
+--        diagnosticSeverityOverrides = {
+--          reportUnusedImport = "information",
+--          reportAssignmentType = "none",
+--          reportMissingTypeStubs = false,
+--          reportIncompatibleMethodOverride = "information",
+--          reportIncompatibleVariableOverride = false,
+--        }
+--      }
+--    }
+--  }
+--}
+
+vim.lsp.config('ruff', {
+  init_options = {
+    settings = {
+      lint = {
+        select = { "A", "C4", "DTZ", "EM", "EXE", "PIE", "PT", "Q", "RET", "SIM", "TD", "TC", "E", "W", "F", "B", "RUF", "C90", "UP", "PERF", "PL", "FURB" },
+        ignore = {
+          -- Pyright duplicates:
+          "F841", -- reportUnusedVariable
+          "F401", -- reportUnusedImport
+          -- Unused 'from ... import *'
+          "F405",
+          -- Redefined name from outer scope
+          "F811",
+          -- Ambiguous variable name ('l', 'O', or 'I')
+          "E741",
+          -- 'from ... import *' used
+          "F403",
+          -- Undefined name from __all__
+          "F822",
+          -- Module level import not at top of file
+          "E402",
+          -- Line too long (> 88 characters)
+          "E501",
+          -- Variable in `for` loop is not a valid `async for` target
+          "RUF007",
+          -- Too many branches, too simple.
+          "PLR0912",
+          -- Too many statements. This is too simple.
+          "PLR0915",
+          "EM101",
+          "EM102",
+          -- Magic constants, this triggers too often and is simplistic
+          "PLR2004",
+          -- Shadowing input builtin, so you can't use e.g. input as an arg
+          "A002",
+          "RET505",
+          -- Pytest
+          "PT003", -- scope=function on fixture warning
+        },
+      },
+      configuration = {
+        lint = {
+          mccabe = {
+            ["max-complexity"] = 10,
+          },
+          pylint = {
+            ["max-returns"] = 10,
+          }
+        },
+      },
+
+    }
+  }
+})
+
+vim.api.nvim_create_autocmd("LspAttach", {
+  group = vim.api.nvim_create_augroup('lsp_attach_disable_ruff_hover', { clear = true }),
+  callback = function(args)
+    local client = vim.lsp.get_client_by_id(args.data.client_id)
+    if client == nil then
+      return
+    end
+    if client.name == 'ruff' then
+      -- Disable hover in favor of Pyright
+      client.server_capabilities.hoverProvider = false
+    end
+  end,
+  desc = 'LSP: Disable hover capability from Ruff',
+})
+
+vim.lsp.config('basedpyright', {
+  settings = {
+    basedpyright = {
+      openFilesOnly = true,
+      disableOrganizeImports = false,
+      analysis = {
+        typeCheckingMode = "standard",
+        useLibraryCodeForTypes = true,
+        diagnosticMode = "openFilesOnly",
+        -- stubPath = "",
+        diagnosticSeverityOverrides = {
+          reportUnnecessaryTypeIgnoreComment = "information",
+          reportUnusedImport = "information",
+          reportAssignmentType = "none",
+          reportMissingTypeStubs = false,
+          reportIncompatibleMethodOverride = "information",
+          reportIncompatibleVariableOverride = false,
+          reportCallInDefaultInitializer = "warning",
+          reportUntypedFunctionDecorator = "information",
+          reportUntypedClassDecorator = "information",
+        }
+      },
+      inlayHints = {
+        callArgumentNames = true,
+        genericTypes = true,
+      }
+    },
+    python = {
+      path = os.getenv("PYENV_VIRTUAL_ENV"), -- to make pyright work
+    }
+  }
+})
+
+vim.lsp.config('docker_compose_language_service', {})
+
+vim.lsp.enable({
+  'gopls',
+  'lua_ls',
+  'jsonls',
+  'bashls',
+  'terraformls',
+  'html',
+  'tailwindcss',
+  'ts_ls',
+  'yamlls',
+  'docker_compose_language_service',
+
+  'basedpyright',
+  'ruff',
+  'nushell',
+})

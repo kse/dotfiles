@@ -4,6 +4,8 @@ vim.g.maplocalleader = ' '
 require('kse')
 require('config')
 
+require("lazy").setup('plugins')
+
 vim.o.splitright = true
 
 -- Source legacy VIM config

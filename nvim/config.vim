@@ -182,7 +182,7 @@ if has("autocmd")
 endif
 
 " Easypaste
-set pastetoggle=<F11>
+"set pastetoggle=<F11>
 
 "Make vim set the title of the window
 set title
@@ -210,7 +210,7 @@ vnoremap > >gv
 set termguicolors
 let g:gruvbox_material_background = "hard"
 "colorscheme gruvbox-material
-colorscheme kanagawa-dragon
+colorscheme kanagawa-wave
 
 let Tlist_Ctags_Cmd = "/usr/bin/ctags"
 let Tlist_WinWidth = 30

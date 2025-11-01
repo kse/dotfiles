@@ -18,3 +18,7 @@ schema
 schema
 parameters
 UUID
+set_linode_interfaces_datacenters
+linode
+datacenter
+datacenters

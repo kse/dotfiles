@@ -14,7 +14,11 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-require("lazy").setup('kse.packages')
+-- require("lazy").setup('kse.packages')
+
+require("lazy").setup({
+  {import = 'kse.plugins'},
+})
 
 --require('kse.completion')
 require('kse.keymaps')

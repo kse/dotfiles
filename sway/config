@@ -18,7 +18,7 @@ set $right l
 set $term alacritty
 
 # Preferred browser
-set $browser chromium
+set $browser google-chrome
 
 # Your preferred application launcher
 # Note: pass the final command to swaymsg so that the resulting window can be opened
@@ -42,38 +42,6 @@ set $runmenu wofi --show run | xargs swaymsg exec --
 
 output eDP-1 {
   pos 0,0
-}
-
-output "Dell Inc. DELL P2415Q D8VXF79P0KAL" {
-  pos 1920,0
-  #scale 1.5
-  #mode 1920x1080@60Hz
-  #mode 2560x1440@59.951Hz
-
-  # 1440 aka WQHD
-  #scale 1.5
-
-  # Custom
-  scale 1.333333333333333333333
-
-  mode 3840x2160@59.996Hz
-}
-
-output "Dell Inc. DELL P2415Q D8VXF03507TB" {
-  #mode 1920x1080@60Hz
-  #pos 5760,0
-  #mode 2560x1440@59.951Hz
-
-  # 1440p aka WQHD
-  #scale 1.5
-  #pos 4480,0
-
-  # Custom
-  scale 1.333333333333333333333
-  pos 4800,0
-
-  mode 3840x2160@59.997Hz
-  #mode 3840x2160@29.981Hz
 }
 
 output * bg #000000 solid_color
@@ -260,7 +228,6 @@ default_border pixel 2
         $mod+Alt+$left move workspace to output left
     }
 
-
     # Change output focus
     bindsym Alt+Tab focus output right
     bindsym Alt+Shift+Tab focus output right
@@ -358,6 +325,8 @@ bindsym Shift+Alt+d exec makoctl dismiss
 #
 
 exec nm-applet --indicator
-exec swaync
+exec ssh-agent -D &
+# exec swaync
+
 bindsym $mod+Shift+n exec swaync-client -t -sw
 bindsym $mod+Shift+p exec ~/.local/bin/select_password

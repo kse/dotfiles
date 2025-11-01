@@ -1,6 +1,5 @@
 vim.keymap.set("t", "<esc><esc>", "<c-\\><c-n>")
-
-vim.keymap.set("n", "<leader>f", ":Floaterminal<CR>")
+vim.keymap.set("n", "<localleader>f", ":Floaterminal<CR>")
 
 local state = {
   floating = {
