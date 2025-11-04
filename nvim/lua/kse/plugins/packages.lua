@@ -23,7 +23,7 @@ return {
   -- {'williamboman/mason.nvim'},
   -- {'williamboman/mason-lspconfig.nvim'},
 
-  { 'VonHeikemen/lsp-zero.nvim', branch = 'v3.x' },
+  -- { 'VonHeikemen/lsp-zero.nvim', branch = 'v3.x' },
   { 'neovim/nvim-lspconfig' },
   { 'hrsh7th/cmp-nvim-lsp' },
   { 'hrsh7th/nvim-cmp' },
@@ -143,8 +143,6 @@ return {
   'folke/todo-comments.nvim',
   'folke/lazy.nvim',
 
-  { "folke/neodev.nvim",    opts = {} },
-
   'jpalardy/vim-slime',
 
   -- {
@@ -238,14 +236,14 @@ return {
       "nvim-lua/plenary.nvim",
       "MunifTanjim/nui.nvim",
       --- The below dependencies are optional,
-      "echasnovski/mini.pick",         -- for file_selector provider mini.pick
+      "echasnovski/mini.pick",       -- for file_selector provider mini.pick
       -- "nvim-telescope/telescope.nvim", -- for file_selector provider telescope
-      "hrsh7th/nvim-cmp",              -- autocompletion for avante commands and mentions
-      "folke/snacks.nvim",             -- for input provider snacks
-      "ibhagwan/fzf-lua",              -- for file_selector provider fzf
-      "stevearc/dressing.nvim",        -- for input provider dressing
-      "nvim-tree/nvim-web-devicons",   -- or echasnovski/mini.icons
-      "zbirenbaum/copilot.lua",        -- for providers='copilot'
+      "hrsh7th/nvim-cmp",            -- autocompletion for avante commands and mentions
+      "folke/snacks.nvim",           -- for input provider snacks
+      "ibhagwan/fzf-lua",            -- for file_selector provider fzf
+      "stevearc/dressing.nvim",      -- for input provider dressing
+      "nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
+      "zbirenbaum/copilot.lua",      -- for providers='copilot'
       {
         -- support for image pasting
         "HakonHarnes/img-clip.nvim",
@@ -423,6 +421,19 @@ return {
       -- OR 'ibhagwan/fzf-lua',
       'folke/snacks.nvim',
       'nvim-tree/nvim-web-devicons',
+    },
+  },
+
+
+  {
+    "folke/lazydev.nvim",
+    ft = "lua", -- only load on lua files
+    opts = {
+      library = {
+        -- See the configuration section for more details
+        -- Load luvit types when the `vim.uv` word is found
+        { path = "${3rd}/luv/library", words = { "vim%.uv" } },
+      },
     },
   },
 }
