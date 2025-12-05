@@ -181,7 +181,8 @@ vim.lsp.config('ruff', {
           "A002",
           "RET505",
           -- Pytest
-          "PT003", -- scope=function on fixture warning
+          "PT003",  -- scope=function on fixture warning
+          "SIM102", -- Merging nested if's
         },
       },
       configuration = {
@@ -226,11 +227,10 @@ vim.lsp.config('basedpyright', {
         typeCheckingMode = "standard",
         useLibraryCodeForTypes = true,
         diagnosticMode = "openFilesOnly",
-        -- stubPath = "",
         diagnosticSeverityOverrides = {
           reportUnnecessaryTypeIgnoreComment = "information",
           reportUnusedImport = "information",
-          reportAssignmentType = "none",
+          reportAssignmentType = "error",
           reportMissingTypeStubs = false,
           reportIncompatibleMethodOverride = "information",
           reportIncompatibleVariableOverride = false,

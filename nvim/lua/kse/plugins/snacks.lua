@@ -4,9 +4,93 @@ return {
     ---@type snacks.Config
     opts = {
       picker = {
-        enabled = true
+        enabled = true,
+        jump = {
+          jumplist = true,   -- save the current position in the jumplist
+          tagstack = false,  -- save the current position in the tagstack
+          reuse_win = false, -- reuse an existing window if the buffer is already open
+          close = true,      -- close the picker when jumping/editing to a location (defaults to true)
+          match = false,     -- jump to the first match position. (useful for `lines`)
+        },
+        sources = {
+          lsp_definitions = {
+            format = "file",
+            include_current = false,
+            auto_confirm = true,
+            jump = { tagstack = true, reuse_win = false },
+          },
+          lsp_references = {
+            format = "file",
+            include_declaration = true,
+            include_current = false,
+            auto_confirm = true,
+            jump = {
+              tagstack = true,
+              reuse_win = false
+            },
+          },
+        },
+        ---@class snacks.picker.formatters.Config
+        formatters = {
+          file = {
+            filename_first = false, -- display filename before the file path
+            --- * left: truncate the beginning of the path
+            --- * center: truncate the middle of the path
+            --- * right: truncate the end of the path
+            ---@type "left"|"center"|"right"
+            --truncate = "left",
+            min_width = 40,        -- minimum length of the truncated path
+            filename_only = false, -- only show the filename
+            icon_width = 2,        -- width of the icon (in characters)
+            git_status_hl = true,  -- use the git status highlight group for the filename
+          },
+          selected = {
+            show_always = false, -- only show the selected column when there are multiple selections
+            unselected = true,   -- use the unselected icon for unselected items
+          },
+          severity = {
+            icons = true,  -- show severity icons
+            level = false, -- show severity level
+            ---@type "left"|"right"
+            pos = "left",  -- position of the diagnostics
+          },
+        },
+      },
+      gitbrowse = {
+        -- your gitbrowse configuration comes here
+        -- or leave it empty to use the default settings
+        -- refer to the configuration section below
+        --
+        notify = true, -- show notification on open
+
+        -- Handler to open the url in a browser
+        ---@param url string
+        open = function(url)
+          if vim.fn.has("nvim-0.10") == 0 then
+            require("lazy.util").open(url, { system = true })
+            return
+          end
+          vim.ui.open(url)
+        end,
+
+        ---@type "repo" | "branch" | "file" | "commit" | "permalink"
+        what = "file", -- what to open. not all remotes support all types
+        commit = nil, ---@type string?
+        branch = nil, ---@type string?
+        line_start = nil, ---@type number?
+        line_end = nil, ---@type number?
+
+        url_patterns = {
+          ["bits.linode.com"] = {
+            branch = "/tree/{branch}",
+            file = "/blob/{branch}/{file}#L{line_start}-L{line_end}",
+            permalink = "/blob/{branch}/{file}#L{line_start}-L{line_end}",
+            commit = "/commit/{commit}",
+          },
+        },
       }
     },
+
     keys = {
       -- Top Pickers & Explorer
       { "<leader><space>", function() Snacks.picker.smart() end,                                   desc = "Smart Find Files" },
