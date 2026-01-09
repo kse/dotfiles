@@ -7,7 +7,6 @@ return {
   'peterrincker/vim-argumentative',
 
   -- Syntax
-  'nvim-treesitter/nvim-treesitter',
   {
     "nvim-treesitter/nvim-treesitter-textobjects",
     after = "nvim-treesitter",
@@ -182,13 +181,6 @@ return {
     'mrjones2014/legendary.nvim',
     -- sqlite is only needed if you want to use frequency sorting
     dependencies = { 'kkharji/sqlite.lua' }
-  },
-
-  {
-    'folke/trouble.nvim',
-    dependencies = {
-      'nvim-tree/nvim-web-devicons', lazy = true,
-    },
   },
 
   {

@@ -104,10 +104,6 @@ vim.api.nvim_create_autocmd({ "BufWritePre" }, {
   end,
 })
 
---vim.lsp.config('terraform_lsp', {
---  filetypes = { "terraform", "hcl", "terraform-vars" }
---})
-
 
 vim.lsp.config('yamlls', {
   settings = {
@@ -197,32 +193,41 @@ vim.lsp.config('ruff', {
       },
 
     }
-  }
+  },
+
+  on_attach = function(client, _)
+    client.server_capabilities.documentFormattingProvider = false
+    client.server_capabilities.documentRangeFormattingProvider = false
+    client.server_capabilities.hoverProvider = false
+  end,
+
 })
 
 -- https://neovim.io/doc/user/lsp.html#lsp-attach
-vim.api.nvim_create_autocmd("LspAttach", {
-  group = vim.api.nvim_create_augroup('lsp_attach_disable_ruff_hover', { clear = true }),
-  callback = function(args)
-    local client = vim.lsp.get_client_by_id(args.data.client_id)
-
-    if client == nil then
-      return
-    end
-
-    -- Disable hover capability from Ruff in favor our basedpyright
-    if client.name == 'ruff' then
-      -- Disable hover in favor of Pyright
-      client.server_capabilities.hoverProvider = false
-    end
-  end,
-})
+-- vim.api.nvim_create_autocmd("LspAttach", {
+--   group = vim.api.nvim_create_augroup('lsp_attach_disable_ruff_hover', { clear = true }),
+--   callback = function(args)
+--     local client = vim.lsp.get_client_by_id(args.data.client_id)
+--
+--     if client == nil then
+--       return
+--     end
+--
+--     -- Disable hover capability from Ruff in favor our basedpyright
+--     if client.name == 'ruff' then
+--       -- Disable hover in favor of Pyright
+--       client.server_capabilities.documentFormattingProvider = false
+--       client.server_capabilities.documentRangeFormattingProvider = false
+--       client.server_capabilities.hoverProvider = false
+--     end
+--   end,
+-- })
 
 vim.lsp.config('basedpyright', {
   settings = {
     basedpyright = {
       openFilesOnly = true,
-      disableOrganizeImports = false,
+      disableOrganizeImports = true,
       analysis = {
         typeCheckingMode = "standard",
         useLibraryCodeForTypes = true,
@@ -245,7 +250,8 @@ vim.lsp.config('basedpyright', {
       }
     },
     python = {
-      path = os.getenv("PYENV_VIRTUAL_ENV"), -- to make pyright work
+      path = os.getenv("VIRTUAL_ENV"), -- to make pyright work
+      pythonPath = (os.getenv("VIRTUAL_ENV") or "") .. "/bin/python",
     }
   }
 })
@@ -265,6 +271,7 @@ vim.lsp.enable({
   'docker_compose_language_service',
 
   'basedpyright',
+  --'ty',
   'ruff',
   'nushell',
 })

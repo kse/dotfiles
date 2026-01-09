@@ -4,15 +4,74 @@ if not ok then return end
 local vg = vim.g
 vg.maplocalleader = " "
 
-return legendary.keymaps({
-  -- Editing words
-  { "<LocalLeader>,", "<cmd>norm A,<CR>",   hide = true, description = "Append comma" },
-  { "<LocalLeader>;", "<cmd>norm A;<CR>",   hide = true, description = "Append semicolon" },
+local function is_filetype(...)
+  local current_ft = vim.bo.filetype
+
+  for _, ft in ipairs({ ... }) do
+    if ft == current_ft then
+      return true
+    end
+  end
+
+  return false
+end
+
+local python_alt = require("kse.utils.python_alternate")
+
+local wk = require("which-key")
+wk.add({
+  -- Simple insertions
+  {
+    mode = { "n" },
+    { "<LocalLeader>,", "<cmd>norm A,<CR>", hidden = true, desc = "Append comma at EOL" },
+    { "<LocalLeader>;", "<cmd>norm A;<CR>", hidden = true, desc = "Append semicolon at EOL" },
+  },
 
   -- Clear search
-  { "<Leader>/",      "<cmd>nohlsearch<CR>" },
+  { "<Leader>/", "<cmd>nohlsearch<cr>", hidden = true, mode = "n", desc = "Clear search" },
+
+  {
+    "<LocalLeader>yf",
+    function() require("kse.utils.pytest").yank_method() end,
+    desc = "Copy pytest path to method",
+  },
+  {
+    "<LocalLeader>yc",
+    function() require("kse.utils.pytest").yank_class() end,
+    desc = "Copy pytest path to class",
+  },
+
+  {
+    '<LocalLeader>a',
+    function()
+      if is_filetype("go") then
+        vim.cmd(':GoAlt')
+        return
+      elseif is_filetype("python") then
+        python_alt.switch()
+      end
+    end,
+    hidden = true,
+    desc = "Switch between source and test file",
+  },
+
+  {
+    '<LocalLeader>A',
+    function()
+      if is_filetype("go") then
+        vim.cmd(':GoAlt')
+        return
+      elseif is_filetype("python") then
+        python_alt.switch({ create = true })
+      end
+    end,
+    hidden = true,
+    desc = "Switch between source and test file",
+  },
+})
 
 
+return legendary.keymaps({
   -- Trouble
   {
     "<leader>xx",
@@ -105,61 +164,23 @@ return legendary.keymaps({
     }
   },
 
-  -- Go Callers
-  --{ -- TODO: Use gr for referrers
-  --  '<LocalLeader>C',
-  --  '<Plug>(go-callers)',
-  --  hide = true,
-  --  filters = {
-  --    ft = 'go'
-  --  }
-  --},
-
-  -- Edit alternate file
-  {
-    '<LocalLeader>a',
-    function()
-      vim.cmd(':GoAlt')
-    end,
-    hide = true,
-    filters = {
-      ft = 'go'
-    }
-  },
-
-  -- Edit alternate file, create if it doesn't exist
-  {
-    '<LocalLeader>A',
-    function()
-      vim.cmd(':GoAlt!')
-    end,
-    hide = true,
-    filters = {
-      ft = 'go'
-    }
-  },
-  --{
-  --  '<LocalLeader>i',
-  --  '<Plug>(go-info)',
-  --  hide = true,
-  --  filters = {
-  --    ft = 'go'
-  --  }
-  --},
-  --{ -- TODO: Forward to trouble instead
-  --  '<LocalLeader>I',
-  --  '<Plug>(go-implements)',
-  --  hide = true,
-  --  filters = {
-  --    ft = 'go'
-  --  }
-  --},
   {
     '<C-e>',
     function()
       vim.cmd(':GoIfErr')
     end,
     mode = { 'i' },
+    hide = true,
+    filters = {
+      ft = 'go'
+    },
+  },
+  {
+    '<F4>',
+    function()
+      vim.cmd(':GoRename')
+    end,
+    mode = { 'n' },
     hide = true,
     filters = {
       ft = 'go'
@@ -240,6 +261,16 @@ return legendary.keymaps({
     description = "Start Zen Mode",
     opts        = { silent = true, noremap = true },
   },
+
+  {
+    '<F2>',
+    function()
+      require("tiny-code-action").code_action()
+    end,
+    mode = { 'n', 'x' },
+    hide = true,
+    noremap = true,
+  }
   --{
   --  '<Space>',
   --  '<C-d>',
