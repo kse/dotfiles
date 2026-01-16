@@ -274,4 +274,5 @@ vim.lsp.enable({
   --'ty',
   'ruff',
   'nushell',
+  'rust_analyzer',
 })
