@@ -52,6 +52,16 @@
         }
     },
 
+  "idle_inhibitor": {
+      "format": "{icon}",
+      "format-icons": {
+           "activated": "☀️ Awake",
+           "deactivated": "🌙 Sleep"
+      },
+      "timeout": 30.5
+  },
+
+
     "pulseaudio": {
         "format": "{icon}",
         "format-bluetooth": "{icon}",
@@ -75,10 +85,15 @@
             "warning": 30,
             "critical": 15
         },
-        "format": "{icon} {}%",
-        "format-charging": " {icon}",
+        "format": "{capacity}% {icon}",
+        "format-charging": "{capactity}% ",
         "format-icons": ["", "", "", "", ""],
-        "on-click": "notify-send -u low -t 3000 'Battery Status' \"$(acpi)\""
+        "on-click": "notify-send -u low -t 3000 'Battery Status' \"$(acpi)\"",
+        "events": {
+             "on-discharging-warning": "notify-send -u normal 'Low Battery'",
+             "on-discharging-critical": "notify-send -u critical 'Very Low Battery'",
+             "on-charging-100": "notify-send -u normal 'Battery Full!'"
+        },
     },
 
     "clock": {
